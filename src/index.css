@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "./styles/businessTheme.css";
+
+/* Custom utility bindings matching Tailwind classes and spec */
+@theme {
+  --color-navy-deep: #070B14;
+  --color-graphite: #111726;
+  --color-warm-white: #F7F5F0;
+  --color-card-light: #FFFFFF;
+  --color-text-on-dark: #F9FAFB;
+  --color-text-muted-dark: #9CA3AF;
+  --color-text-on-light: #0F172A;
+  --color-accent-bronze: #C59B5F;
+  --color-accent-gold: #E5C185;
+}

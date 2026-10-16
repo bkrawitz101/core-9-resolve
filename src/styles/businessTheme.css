@@ -1,0 +1,72 @@
+:root {
+  --bg-navy-deep: #070B14;
+  --bg-graphite: #111726;
+  --bg-warm-white: #F7F5F0;
+  --bg-card-light: #FFFFFF;
+  --text-on-dark: #F9FAFB;
+  --text-muted-dark: #9CA3AF;
+  --text-on-light: #0F172A;
+  --text-muted-light: #475569;
+  --accent-bronze: #C59B5F;
+  --accent-gold-bright: #E5C185;
+  --border-dark: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(15, 23, 42, 0.08);
+  --font-headline: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Base Body & Reset */
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-body);
+  background-color: var(--bg-navy-deep);
+  color: var(--text-on-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+
+/* Typography authority */
+h1, h2, h3, h4, .font-headline {
+  font-family: var(--font-headline);
+  letter-spacing: -0.025em;
+}
+
+.font-mono-index {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Architectural Converging Geometry & Subtle Lighting */
+.hero-radial-glow {
+  background: radial-gradient(circle 800px at 50% 0%, rgba(22, 32, 56, 0.45), transparent 70%);
+}
+
+.bronze-glow-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bronze-glow-hover:hover {
+  box-shadow: 0 0 24px rgba(197, 155, 95, 0.28);
+  border-color: #E5C185;
+}
+
+/* Dialog and Modal scroll isolation per modern web best practices */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgba(7, 11, 20, 0.85);
+  backdrop-filter: blur(8px);
+}
