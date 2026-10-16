@@ -59,7 +59,7 @@ export const BroadcastBlogStage4: React.FC<BroadcastBlogStage4Props> = ({ onOpen
         {/* Header */}
         <div className="mb-12">
           <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#C59B5F] bg-[#111726] px-3.5 py-1.5 rounded border border-[#C59B5F]/30">
-            Advisory Insights & Engagement Pathways • Stage 4
+            Advisory Insights & Engagement Pathways
           </span>
           <h1 className="font-headline text-3xl sm:text-5xl font-bold tracking-tight text-white mt-4 mb-4">
             Strategic Guidance & Broadcasts

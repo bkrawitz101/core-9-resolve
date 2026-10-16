@@ -52,7 +52,7 @@ export const ExecutiveFooter: React.FC<ExecutiveFooterProps> = ({
                   onClick={() => onNavigate('home')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  {BUSINESS_COPY.NAV_LINK_HOME} (Stage 1 Landing)
+                  {BUSINESS_COPY.NAV_LINK_HOME}
                 </button>
               </li>
               <li>
@@ -68,7 +68,7 @@ export const ExecutiveFooter: React.FC<ExecutiveFooterProps> = ({
                   onClick={() => onNavigate('team')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  {BUSINESS_COPY.NAV_LINK_TEAM} (Digital Visiting Card)
+                  {BUSINESS_COPY.NAV_LINK_TEAM}
                 </button>
               </li>
               <li>
@@ -76,7 +76,7 @@ export const ExecutiveFooter: React.FC<ExecutiveFooterProps> = ({
                   onClick={() => onNavigate('system')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  The Living System (Stage 3)
+                  The Living-System Framework
                 </button>
               </li>
               <li>
@@ -84,7 +84,7 @@ export const ExecutiveFooter: React.FC<ExecutiveFooterProps> = ({
                   onClick={() => onNavigate('insights')}
                   className="hover:text-white transition-colors cursor-pointer text-left"
                 >
-                  Insights & Broadcasts (Stage 4)
+                  Insights & Strategic Broadcasts
                 </button>
               </li>
             </ul>

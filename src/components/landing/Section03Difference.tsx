@@ -32,14 +32,6 @@ export const Section03Difference: React.FC<Section03DifferenceProps> = ({
           
           {/* 60% Column: Copy Authority */}
           <div className="lg:col-span-7 flex flex-col justify-center">
-            
-            {/* Section Eyebrow */}
-            <div className="inline-block mb-4">
-              <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#C59B5F] bg-[#070B14] px-3.5 py-1.5 rounded border border-[#C59B5F]/30">
-                {BUSINESS_COPY.S3_EYEBROW}
-              </span>
-            </div>
-
             {/* Headline */}
             <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#F9FAFB] leading-[1.15] mb-6">
               {BUSINESS_COPY.S3_H2}

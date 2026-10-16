@@ -22,14 +22,6 @@ export const Section05Invitation: React.FC<Section05InvitationProps> = ({
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 text-center flex flex-col items-center">
-        
-        {/* Section Eyebrow */}
-        <div className="inline-block mb-6">
-          <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#C59B5F] bg-[#111726]/90 px-3.5 py-1.5 rounded-full border border-[#C59B5F]/30 backdrop-blur-sm shadow-sm">
-            {BUSINESS_COPY.S5_EYEBROW}
-          </span>
-        </div>
-
         {/* Primary Invitation Headline */}
         <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#F9FAFB] leading-[1.12] mb-6 max-w-3xl">
           {BUSINESS_COPY.S5_H2}

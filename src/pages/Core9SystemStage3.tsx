@@ -22,7 +22,7 @@ export const Core9SystemStage3: React.FC<Core9SystemStage3Props> = ({ onOpenDisc
         {/* Header */}
         <div className="mb-14">
           <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#C59B5F] bg-[#111726] px-3.5 py-1.5 rounded border border-[#C59B5F]/30">
-            Systemic Architecture • Stage 3
+            Systemic Architecture
           </span>
           <h1 className="font-headline text-3xl sm:text-5xl font-bold tracking-tight text-white mt-4 mb-4">
             The Living-System Framework

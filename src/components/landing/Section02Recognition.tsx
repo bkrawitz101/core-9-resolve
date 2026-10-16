@@ -14,12 +14,7 @@ export const Section02Recognition: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14 md:mb-20">
-          <div className="inline-block mb-3">
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#C59B5F] font-semibold bg-white/60 px-3 py-1 rounded border border-[#C59B5F]/20">
-              {BUSINESS_COPY.S2_EYEBROW}
-            </span>
-          </div>
+        <div className="max-w-3xl mb-14 md:mb-18">
           <h2 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#0F172A] leading-[1.15]">
             {BUSINESS_COPY.S2_H2}
           </h2>
