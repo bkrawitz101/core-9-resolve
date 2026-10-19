@@ -212,6 +212,11 @@
       max-width: 100% !important;
     }
 
+    body.controls-only-window #diff-counter-btn,
+    body.controls-only-window .btn-action:not(#btn-popup-redock) {
+      display: none !important;
+    }
+
     /* Main Window When Left Toolbar is Popped Out or Collapsed */
     body.mode-fullscreen-preview .controls-panel {
       display: none !important;
@@ -219,6 +224,228 @@
 
     body.mode-fullscreen-preview .studio-container {
       grid-template-columns: 1fr !important;
+    }
+
+    /* Floating Left Dock Handle for Main Window */
+    .dock-handle-bar {
+      display: none;
+      position: fixed;
+      left: 0;
+      top: 64px;
+      bottom: 0;
+      width: 38px;
+      background: rgba(17, 23, 38, 0.95);
+      border-right: 1px solid rgba(197, 155, 95, 0.4);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.mode-fullscreen-preview .dock-handle-bar {
+      display: flex;
+    }
+
+    .dock-handle-bar:hover {
+      width: 50px;
+      background: rgba(22, 32, 56, 0.98);
+      box-shadow: 4px 0 20px rgba(197, 155, 95, 0.35);
+    }
+
+    .dock-handle-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--studio-bronze-light);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .dock-handle-icon {
+      font-size: 1.15rem;
+      transform: rotate(90deg);
+      color: #E5C185;
+    }
+
+    /* Prominent Sticky Re-dock Banner in Popped-Out Floating Window */
+    .popup-dock-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      background: #0B101D;
+      border-bottom: 2px solid var(--studio-bronze);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    body.controls-only-window .popup-dock-banner {
+      display: flex;
+    }
+
+    .popup-dock-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--studio-bronze-light);
+    }
+
+    .status-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34D399;
+      box-shadow: 0 0 8px #34D399;
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @keyframes pulseDockGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(197, 155, 95, 0); }
+      50% { box-shadow: 0 0 16px rgba(229, 193, 133, 0.6); }
+    }
+
+    .dock-pulse-btn {
+      animation: pulseDockGlow 2.5s infinite;
+      border-color: #E5C185 !important;
+      background: linear-gradient(135deg, #C59B5F, #B58B4F) !important;
+      color: #070B14 !important;
+      font-weight: 700 !important;
+    }
+
+    /* Enhanced Color Token Labels & Role Metadata */
+    .token-friendly-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .token-friendly-title {
+      font-family: var(--font-headline);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .token-category-tag {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.12rem 0.45rem;
+      border-radius: 3px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .tag-bg {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #93C5FD;
+    }
+
+    .tag-font {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #D8B4FE;
+    }
+
+    .tag-accent {
+      background: rgba(197, 155, 95, 0.18);
+      border: 1px solid rgba(197, 155, 95, 0.45);
+      color: var(--studio-bronze-light);
+    }
+
+    .tag-border {
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #CBD5E1;
+    }
+
+    .token-assignment-detail {
+      font-size: 0.7rem;
+      color: #94A3B8;
+      line-height: 1.35;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      border-left: 2px solid rgba(197, 155, 95, 0.4);
+      margin-bottom: 0.45rem;
+    }
+
+    .token-assignment-detail strong {
+      color: #E2E8F0;
+    }
+
+    /* Color Role Architecture Matrix Card */
+    .color-role-guide-card {
+      background: rgba(7, 11, 20, 0.75);
+      border: 1px solid rgba(197, 155, 95, 0.25);
+      border-radius: 6px;
+      padding: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .color-role-guide-title {
+      font-family: var(--font-headline);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--studio-bronze-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .color-role-guide-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .color-role-guide-row {
+      display: grid;
+      grid-template-columns: 85px 1fr;
+      gap: 0.6rem;
+      font-size: 0.68rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .color-role-guide-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .color-role-guide-name {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: #F1F5F9;
+    }
+
+    .color-role-guide-desc {
+      color: #94A3B8;
+      line-height: 1.35;
     }
 
     /* Studio Main Layout */
@@ -751,7 +978,7 @@
         ☰ Show Toolbar
       </button>
 
-      <button id="btn-redock-header" class="btn-action btn-action-primary" onclick="closePopoutControlsWindow()" style="display: none;" title="Re-dock floating controls palette back into this window">
+      <button id="btn-redock-header" class="btn-action dock-pulse-btn" onclick="restoreToolbarInMainWindow()" style="display: none;" title="Re-dock floating controls palette back into this window">
         ⤓ Re-dock Toolbar
       </button>
 
@@ -780,11 +1007,30 @@
     </div>
   </header>
 
+  <!-- Left-Edge Dock Handle (Visible when Toolbar is Popped Out or Collapsed) -->
+  <div id="dock-handle-bar" class="dock-handle-bar" onclick="restoreToolbarInMainWindow()" title="Click to re-dock toolbar back into this window">
+    <div class="dock-handle-pill">
+      <span class="dock-handle-icon">⤓</span>
+      <span class="dock-handle-label">Re-dock Toolbar</span>
+    </div>
+  </div>
+
   <!-- Studio Workspace Container -->
   <main class="studio-container">
 
     <!-- LEFT SIDEBAR: Design Token Workbench -->
     <aside class="controls-panel">
+
+      <!-- Sticky Re-dock Banner in Popped-out Window -->
+      <div id="popup-dock-banner" class="popup-dock-banner">
+        <div class="popup-dock-info">
+          <span class="status-pulse-dot"></span>
+          <span style="font-weight: 700; color: #FFFFFF;">Controls Palette</span>
+        </div>
+        <button class="btn-action btn-action-primary" onclick="requestRedockFromPopup()" style="font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.74rem;">
+          ⤓ Re-dock to Main Window
+        </button>
+      </div>
       
       <!-- Top Controls Filter Bar & Popout Action -->
       <div class="controls-top-bar">
@@ -829,12 +1075,44 @@
         <!-- 1. Primary Colors & Surfaces -->
         <section class="control-section">
           <div class="section-header">
-            <span>1. Core Color Palette &amp; Surfaces</span>
+            <span>1. Core Color Palette &amp; Assignments</span>
           </div>
           <div class="section-body">
             
-            <!-- Obsidian Navy -->
+            <!-- Architectural Color Role Architecture Guide -->
+            <div class="color-role-guide-card">
+              <div class="color-role-guide-title">
+                <span>🏛️ Visual System &amp; Surface Roles</span>
+              </div>
+              <div class="color-role-guide-grid">
+                <div class="color-role-guide-row">
+                  <span class="color-role-guide-name" style="color: #93C5FD;">Backgrounds</span>
+                  <span class="color-role-guide-desc">Deep Obsidian Navy (Hero &amp; S05 Vault) contrasting with Warm White (S02 &amp; S04 editorial sections).</span>
+                </div>
+                <div class="color-role-guide-row">
+                  <span class="color-role-guide-name" style="color: #CBD5E1;">Surfaces</span>
+                  <span class="color-role-guide-desc">Elevated Graphite slabs (S03 Difference, Nav &amp; Footer) and Crisp Alabaster cards on warm white.</span>
+                </div>
+                <div class="color-role-guide-row">
+                  <span class="color-role-guide-name" style="color: #D8B4FE;">Typography</span>
+                  <span class="color-role-guide-desc">High-contrast Light Ink / Muted Slate on dark; Dark Ink / Medium Slate on light surfaces.</span>
+                </div>
+                <div class="color-role-guide-row">
+                  <span class="color-role-guide-name" style="color: var(--studio-bronze-light);">Accents</span>
+                  <span class="color-role-guide-desc">Restrained Bronze for primary CTAs &amp; vectors; Specular Gold for hover glows and focal rims.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Obsidian Navy Canvas -->
             <div class="token-row" id="row-bg-navy-deep">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Deep Obsidian Navy Canvas</span>
+                <span class="token-category-tag tag-bg">Background</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Main page canvas, Hero section (S01), Executive Invitation Vault (S05), root dark container.
+              </div>
               <div class="token-label-bar">
                 <span class="token-name">--bg-navy-deep</span>
                 <span class="token-val-display" id="val-bg-navy-deep">#070B14</span>
@@ -848,8 +1126,15 @@
               </div>
             </div>
 
-            <!-- Architectural Graphite -->
+            <!-- Architectural Graphite Surface -->
             <div class="token-row" id="row-bg-graphite">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Architectural Graphite Surface</span>
+                <span class="token-category-tag tag-bg">Surface</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Whole-System Difference (S03), elevated dark cards, geometric slabs, executive nav &amp; footer.
+              </div>
               <div class="token-label-bar">
                 <span class="token-name">--bg-graphite</span>
                 <span class="token-val-display" id="val-bg-graphite">#111726</span>
@@ -863,8 +1148,147 @@
               </div>
             </div>
 
+            <!-- Warm White Surface -->
+            <div class="token-row" id="row-bg-warm-white">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Warm White Editorial Canvas</span>
+                <span class="token-category-tag tag-bg">Background</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Recognition Grid (S02) &amp; Pathway Stepper (S04) high-contrast editorial reading sections.
+              </div>
+              <div class="token-label-bar">
+                <span class="token-name">--bg-warm-white</span>
+                <span class="token-val-display" id="val-bg-warm-white">#F7F5F0</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-bg-warm-white" value="#F7F5F0" oninput="updateColorToken('bg-warm-white', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-bg-warm-white" style="background-color: #F7F5F0;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-bg-warm-white" value="#F7F5F0" onchange="updateColorToken('bg-warm-white', this.value)" />
+              </div>
+            </div>
+
+            <!-- Crisp Alabaster Card -->
+            <div class="token-row" id="row-bg-card-light">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Crisp Alabaster Card</span>
+                <span class="token-category-tag tag-bg">Surface</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> 2x2 recognition cards in S02, pathway timeline cards in S04, discovery advisory modal popup.
+              </div>
+              <div class="token-label-bar">
+                <span class="token-name">--bg-card-light</span>
+                <span class="token-val-display" id="val-bg-card-light">#FFFFFF</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-bg-card-light" value="#FFFFFF" oninput="updateColorToken('bg-card-light', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-bg-card-light" style="background-color: #FFFFFF;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-bg-card-light" value="#FFFFFF" onchange="updateColorToken('bg-card-light', this.value)" />
+              </div>
+            </div>
+
+            <!-- Light Ink (Headlines on Dark) -->
+            <div class="token-row" id="row-text-on-dark">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Primary Light Ink (Headings)</span>
+                <span class="token-category-tag tag-font">Font / Headings</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Primary headlines (H1, H2), hero lead text, card headers, and bold titles on dark surfaces.
+              </div>
+              <div class="token-label-bar">
+                <span class="token-name">--text-on-dark</span>
+                <span class="token-val-display" id="val-text-on-dark">#F9FAFB</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-text-on-dark" value="#F9FAFB" oninput="updateColorToken('text-on-dark', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-text-on-dark" style="background-color: #F9FAFB;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-text-on-dark" value="#F9FAFB" onchange="updateColorToken('text-on-dark', this.value)" />
+              </div>
+            </div>
+
+            <!-- Muted Slate Ink (Body on Dark) -->
+            <div class="token-row" id="row-text-muted-dark">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Muted Slate Ink (Body Text)</span>
+                <span class="token-category-tag tag-font">Font / Body</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Secondary body paragraphs, index eyebrows, footnote disclaimers, and supporting copy on dark surfaces.
+              </div>
+              <div class="token-label-bar">
+                <span class="token-name">--text-muted-dark</span>
+                <span class="token-val-display" id="val-text-muted-dark">#9CA3AF</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-text-muted-dark" value="#9CA3AF" oninput="updateColorToken('text-muted-dark', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-text-muted-dark" style="background-color: #9CA3AF;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-text-muted-dark" value="#9CA3AF" onchange="updateColorToken('text-muted-dark', this.value)" />
+              </div>
+            </div>
+
+            <!-- Dark Ink (Headlines on Light) -->
+            <div class="token-row" id="row-text-on-light">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Primary Dark Ink (Headings)</span>
+                <span class="token-category-tag tag-font">Font / Headings</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Section headlines (H2), card titles, and primary copy on Warm White surfaces (S02 &amp; S04).
+              </div>
+              <div class="token-label-bar">
+                <span class="token-name">--text-on-light</span>
+                <span class="token-val-display" id="val-text-on-light">#0F172A</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-text-on-light" value="#0F172A" oninput="updateColorToken('text-on-light', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-text-on-light" style="background-color: #0F172A;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-text-on-light" value="#0F172A" onchange="updateColorToken('text-on-light', this.value)" />
+              </div>
+            </div>
+
+            <!-- Muted Slate Ink (Body on Light) -->
+            <div class="token-row" id="row-text-muted-light">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Muted Slate Ink (Body Text)</span>
+                <span class="token-category-tag tag-font">Font / Body</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Step descriptions, supporting card details, and secondary text on Warm White surfaces.
+              </div>
+              <div class="token-label-bar">
+                <span class="token-name">--text-muted-light</span>
+                <span class="token-val-display" id="val-text-muted-light">#475569</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-text-muted-light" value="#475569" oninput="updateColorToken('text-muted-light', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-text-muted-light" style="background-color: #475569;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-text-muted-light" value="#475569" onchange="updateColorToken('text-muted-light', this.value)" />
+              </div>
+            </div>
+
             <!-- Restrained Bronze Accent -->
             <div class="token-row" id="row-accent-bronze">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Restrained Architectural Bronze</span>
+                <span class="token-category-tag tag-accent">Accent / CTA</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Primary CTA button background, section numbering numerals (01–04), converging light vectors, card vertical accent bars.
+              </div>
               <div class="token-label-bar">
                 <span class="token-name">--accent-bronze</span>
                 <span class="token-val-display" id="val-accent-bronze">#C59B5F</span>
@@ -880,6 +1304,13 @@
 
             <!-- Luminous Gold Edge -->
             <div class="token-row" id="row-accent-gold-bright">
+              <div class="token-friendly-header">
+                <span class="token-friendly-title">Luminous Specular Gold Edge</span>
+                <span class="token-category-tag tag-accent">Highlight</span>
+              </div>
+              <div class="token-assignment-detail">
+                <strong>Assigned to:</strong> Specular light rim along converging vectors, button hover glows, active pill highlights, focus outlines.
+              </div>
               <div class="token-label-bar">
                 <span class="token-name">--accent-gold-bright</span>
                 <span class="token-val-display" id="val-accent-gold-bright">#E5C185</span>
@@ -890,66 +1321,6 @@
                   <div class="color-picker-swatch" id="swatch-accent-gold-bright" style="background-color: #E5C185;"></div>
                 </div>
                 <input type="text" class="token-text-input" id="text-accent-gold-bright" value="#E5C185" onchange="updateColorToken('accent-gold-bright', this.value)" />
-              </div>
-            </div>
-
-            <!-- Warm White Surface -->
-            <div class="token-row" id="row-bg-warm-white">
-              <div class="token-label-bar">
-                <span class="token-name">--bg-warm-white (Sec 02/04)</span>
-                <span class="token-val-display" id="val-bg-warm-white">#F7F5F0</span>
-              </div>
-              <div class="token-input-group">
-                <div class="color-picker-wrap">
-                  <input type="color" class="color-picker-input" id="picker-bg-warm-white" value="#F7F5F0" oninput="updateColorToken('bg-warm-white', this.value)" />
-                  <div class="color-picker-swatch" id="swatch-bg-warm-white" style="background-color: #F7F5F0;"></div>
-                </div>
-                <input type="text" class="token-text-input" id="text-bg-warm-white" value="#F7F5F0" onchange="updateColorToken('bg-warm-white', this.value)" />
-              </div>
-            </div>
-
-            <!-- Crisp Alabaster Card -->
-            <div class="token-row" id="row-bg-card-light">
-              <div class="token-label-bar">
-                <span class="token-name">--bg-card-light</span>
-                <span class="token-val-display" id="val-bg-card-light">#FFFFFF</span>
-              </div>
-              <div class="token-input-group">
-                <div class="color-picker-wrap">
-                  <input type="color" class="color-picker-input" id="picker-bg-card-light" value="#FFFFFF" oninput="updateColorToken('bg-card-light', this.value)" />
-                  <div class="color-picker-swatch" id="swatch-bg-card-light" style="background-color: #FFFFFF;"></div>
-                </div>
-                <input type="text" class="token-text-input" id="text-bg-card-light" value="#FFFFFF" onchange="updateColorToken('bg-card-light', this.value)" />
-              </div>
-            </div>
-
-            <!-- Light Ink (Text on Dark) -->
-            <div class="token-row" id="row-text-on-dark">
-              <div class="token-label-bar">
-                <span class="token-name">--text-on-dark</span>
-                <span class="token-val-display" id="val-text-on-dark">#F9FAFB</span>
-              </div>
-              <div class="token-input-group">
-                <div class="color-picker-wrap">
-                  <input type="color" class="color-picker-input" id="picker-text-on-dark" value="#F9FAFB" oninput="updateColorToken('text-on-dark', this.value)" />
-                  <div class="color-picker-swatch" id="swatch-text-on-dark" style="background-color: #F9FAFB;"></div>
-                </div>
-                <input type="text" class="token-text-input" id="text-text-on-dark" value="#F9FAFB" onchange="updateColorToken('text-on-dark', this.value)" />
-              </div>
-            </div>
-
-            <!-- Dark Ink (Text on Light) -->
-            <div class="token-row" id="row-text-on-light">
-              <div class="token-label-bar">
-                <span class="token-name">--text-on-light</span>
-                <span class="token-val-display" id="val-text-on-light">#0F172A</span>
-              </div>
-              <div class="token-input-group">
-                <div class="color-picker-wrap">
-                  <input type="color" class="color-picker-input" id="picker-text-on-light" value="#0F172A" oninput="updateColorToken('text-on-light', this.value)" />
-                  <div class="color-picker-swatch" id="swatch-text-on-light" style="background-color: #0F172A;"></div>
-                </div>
-                <input type="text" class="token-text-input" id="text-text-on-light" value="#0F172A" onchange="updateColorToken('text-on-light', this.value)" />
               </div>
             </div>
 
@@ -1279,12 +1650,14 @@
     const BASELINE_DEFAULTS = {
       'bg-navy-deep': '#070B14',
       'bg-graphite': '#111726',
-      'accent-bronze': '#C59B5F',
-      'accent-gold-bright': '#E5C185',
       'bg-warm-white': '#F7F5F0',
       'bg-card-light': '#FFFFFF',
       'text-on-dark': '#F9FAFB',
+      'text-muted-dark': '#9CA3AF',
       'text-on-light': '#0F172A',
+      'text-muted-light': '#475569',
+      'accent-bronze': '#C59B5F',
+      'accent-gold-bright': '#E5C185',
       'font-headline': "'Plus Jakarta Sans', sans-serif",
       'font-body': "'Inter', sans-serif",
       'font-mono': "'JetBrains Mono', monospace",
@@ -1292,6 +1665,94 @@
       'body-line-height': '1.65',
       'border-radius-card': '8px',
       'vector-glow-opacity': '0.85'
+    };
+
+    const TOKEN_METADATA = {
+      'bg-navy-deep': {
+        name: 'Primary Obsidian Navy',
+        category: 'Background',
+        assignedTo: 'Main page canvas, Hero (S01), Executive Invitation Vault (S05)'
+      },
+      'bg-graphite': {
+        name: 'Architectural Graphite',
+        category: 'Surface',
+        assignedTo: 'Whole-System Difference (S03), elevated dark cards, slabs, nav & footer'
+      },
+      'bg-warm-white': {
+        name: 'Warm White Surface',
+        category: 'Background',
+        assignedTo: 'Recognition Grid (S02) & Pathway Stepper (S04) editorial reading sections'
+      },
+      'bg-card-light': {
+        name: 'Crisp Alabaster Card',
+        category: 'Surface',
+        assignedTo: '2x2 cards in S02, timeline step cards in S04, discovery modal popup'
+      },
+      'text-on-dark': {
+        name: 'Primary Light Ink',
+        category: 'Font / Headings',
+        assignedTo: 'Headlines (H1, H2), hero lead text, bold titles on dark surfaces'
+      },
+      'text-muted-dark': {
+        name: 'Muted Slate Ink (Dark)',
+        category: 'Font / Body',
+        assignedTo: 'Secondary body paragraphs, index eyebrows, footnote disclaimers on dark'
+      },
+      'text-on-light': {
+        name: 'Primary Dark Ink',
+        category: 'Font / Headings',
+        assignedTo: 'Headlines, card titles, and primary body copy on Warm White surfaces'
+      },
+      'text-muted-light': {
+        name: 'Muted Slate Ink (Light)',
+        category: 'Font / Body',
+        assignedTo: 'Step descriptions, supporting card details, and secondary body on light'
+      },
+      'accent-bronze': {
+        name: 'Restrained Bronze',
+        category: 'Accent / CTA',
+        assignedTo: 'Primary CTA button background, indices (01..04), converging light vectors'
+      },
+      'accent-gold-bright': {
+        name: 'Luminous Specular Gold',
+        category: 'Highlight',
+        assignedTo: 'Specular rim light on vectors, button hover glows, active pill highlights'
+      },
+      'font-headline': {
+        name: 'Headline Font Family',
+        category: 'Typography',
+        assignedTo: 'Executive Headlines: H1, H2, H3, Section Titles, Card Headers'
+      },
+      'font-body': {
+        name: 'Body Font Family',
+        category: 'Typography',
+        assignedTo: 'Clarity & Precision Body Text: Paragraphs, descriptions, navigational items'
+      },
+      'font-mono': {
+        name: 'Monospace Font Family',
+        category: 'Typography',
+        assignedTo: 'Architectural Indices: 01/HERO, step indices 01..04, token badges'
+      },
+      'headline-tracking': {
+        name: 'Headline Tracking',
+        category: 'Typography',
+        assignedTo: 'Letter spacing on all H1, H2, H3 headlines and section headers'
+      },
+      'body-line-height': {
+        name: 'Body Line Height',
+        category: 'Typography',
+        assignedTo: 'Line height spacing and vertical reading rhythm on paragraphs'
+      },
+      'border-radius-card': {
+        name: 'Card Border Radius',
+        category: 'Geometry',
+        assignedTo: 'Corner curvature on recognition cards, modal popups, and buttons'
+      },
+      'vector-glow-opacity': {
+        name: 'Vector Light Glow',
+        category: 'Lighting',
+        assignedTo: 'Illumination intensity on converging architectural vectors and radial glow'
+      }
     };
 
     // Active state clone
@@ -1306,7 +1767,7 @@
     const syncChannel = new BroadcastChannel('core9_studio_channel');
 
     /* ==========================================================================
-       CROSS-WINDOW SYNCHRONIZATION
+       CROSS-WINDOW SYNCHRONIZATION & AUTO RE-DOCK
        ========================================================================== */
     syncChannel.onmessage = (event) => {
       if (!event.data) return;
@@ -1314,8 +1775,8 @@
         activeTokens = { ...event.data.tokens };
         syncInputsFromState();
         applyTokenChanges(false);
-      } else if (event.data.type === 'REDOCK') {
-        closePopoutControlsWindow();
+      } else if (event.data.type === 'REDOCK' || event.data.type === 'POPUP_CLOSED') {
+        restoreToolbarInMainWindow();
       }
     };
 
@@ -1325,10 +1786,43 @@
         activeTokens = { ...event.data.tokens };
         syncInputsFromState();
         applyTokenChanges(false);
-      } else if (event.data.type === 'REDOCK') {
-        closePopoutControlsWindow();
+      } else if (event.data.type === 'REDOCK' || event.data.type === 'POPUP_CLOSED') {
+        restoreToolbarInMainWindow();
       }
     });
+
+    // Notify main window if popup window is closed via browser "X"
+    if (isControlsOnlyWindow) {
+      window.addEventListener('beforeunload', () => {
+        try {
+          syncChannel.postMessage({ type: 'POPUP_CLOSED' });
+          if (window.opener && !window.opener.closed) {
+            window.opener.postMessage({ type: 'POPUP_CLOSED' }, '*');
+          }
+        } catch (e) {}
+      });
+    }
+
+    // Escape key shortcut to re-dock instantly in either window
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (isControlsOnlyWindow) {
+          requestRedockFromPopup();
+        } else if (document.body.classList.contains('mode-fullscreen-preview')) {
+          restoreToolbarInMainWindow();
+        }
+      }
+    });
+
+    // Heartbeat check in main window: Automatically re-dock if user closed popup via OS "X"
+    if (!isControlsOnlyWindow) {
+      setInterval(() => {
+        if (popoutControlsWindowRef && popoutControlsWindowRef.closed) {
+          popoutControlsWindowRef = null;
+          restoreToolbarInMainWindow();
+        }
+      }, 400);
+    }
 
     /* ==========================================================================
        INITIALIZATION & URL HASH PARSER
@@ -1376,7 +1870,7 @@
     });
 
     /* ==========================================================================
-       POPOUT & COLLAPSE CONTROLLERS
+       POPOUT & RE-DOCK CONTROLLERS
        ========================================================================== */
     function openPopoutControlsWindow() {
       if (isControlsOnlyWindow) return;
@@ -1395,8 +1889,12 @@
 
       if (popoutControlsWindowRef) {
         document.body.classList.add('mode-fullscreen-preview');
+        
         const redockBtn = document.getElementById('btn-redock-header');
         if (redockBtn) redockBtn.style.display = 'inline-flex';
+
+        const dockHandle = document.getElementById('dock-handle-bar');
+        if (dockHandle) dockHandle.style.display = 'flex';
 
         setTimeout(() => {
           try {
@@ -1410,17 +1908,31 @@
       }
     }
 
-    function closePopoutControlsWindow() {
+    function restoreToolbarInMainWindow() {
       if (popoutControlsWindowRef && !popoutControlsWindowRef.closed) {
-        popoutControlsWindowRef.close();
+        try {
+          popoutControlsWindowRef.close();
+        } catch (e) {}
       }
       popoutControlsWindowRef = null;
+
       document.body.classList.remove('mode-fullscreen-preview');
+      
       const redockBtn = document.getElementById('btn-redock-header');
       if (redockBtn) redockBtn.style.display = 'none';
+
       const uncollapseBtn = document.getElementById('btn-uncollapse-header');
       if (uncollapseBtn) uncollapseBtn.style.display = 'none';
-      showToast('✓ Re-docked toolbar into main window');
+
+      const dockHandle = document.getElementById('dock-handle-bar');
+      if (dockHandle) dockHandle.style.display = 'none';
+
+      showToast('✓ Toolbar re-docked into main window');
+    }
+
+    // Alias for backward compatibility
+    function closePopoutControlsWindow() {
+      restoreToolbarInMainWindow();
     }
 
     function requestRedockFromPopup() {
@@ -1430,7 +1942,10 @@
           window.opener.postMessage({ type: 'REDOCK' }, '*');
         }
       } catch (e) {}
-      window.close();
+
+      setTimeout(() => {
+        window.close();
+      }, 50);
     }
 
     function toggleSidebarCollapse() {
@@ -1439,7 +1954,11 @@
       if (uncollapseBtn) {
         uncollapseBtn.style.display = isCollapsed ? 'inline-flex' : 'none';
       }
-      showToast(isCollapsed ? 'Full Preview Mode (Toolbar Hidden)' : 'Toolbar Restored');
+      const dockHandle = document.getElementById('dock-handle-bar');
+      if (dockHandle) {
+        dockHandle.style.display = isCollapsed ? 'flex' : 'none';
+      }
+      showToast(isCollapsed ? 'Full Preview Mode (Toolbar Collapsed)' : 'Toolbar Restored');
     }
 
     /* ==========================================================================
@@ -1595,11 +2114,70 @@
         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
         if (!iframeDoc || !iframeDoc.documentElement) return;
 
-        // Inject active tokens directly into the iframe's root style
+        // 1. Inject active tokens directly into the iframe's root style
         const docEl = iframeDoc.documentElement;
         Object.keys(activeTokens).forEach(key => {
           docEl.style.setProperty(`--${key}`, activeTokens[key]);
         });
+
+        // 2. Ensure dynamic override stylesheet exists in iframe head for instant reactivity
+        let overrideStyle = iframeDoc.getElementById('core9-studio-live-override');
+        if (!overrideStyle) {
+          overrideStyle = iframeDoc.createElement('style');
+          overrideStyle.id = 'core9-studio-live-override';
+          iframeDoc.head.appendChild(overrideStyle);
+        }
+
+        overrideStyle.textContent = `
+          /* Live Reactive Style Overrides Injected from Styleguide Studio */
+          :root {
+            --bg-navy-deep: ${activeTokens['bg-navy-deep']} !important;
+            --bg-graphite: ${activeTokens['bg-graphite']} !important;
+            --bg-warm-white: ${activeTokens['bg-warm-white']} !important;
+            --bg-card-light: ${activeTokens['bg-card-light']} !important;
+            --text-on-dark: ${activeTokens['text-on-dark']} !important;
+            --text-muted-dark: ${activeTokens['text-muted-dark'] || '#9CA3AF'} !important;
+            --text-on-light: ${activeTokens['text-on-light']} !important;
+            --text-muted-light: ${activeTokens['text-muted-light'] || '#475569'} !important;
+            --accent-bronze: ${activeTokens['accent-bronze']} !important;
+            --accent-gold-bright: ${activeTokens['accent-gold-bright']} !important;
+            --font-headline: ${activeTokens['font-headline']} !important;
+            --font-body: ${activeTokens['font-body']} !important;
+            --font-mono: ${activeTokens['font-mono']} !important;
+          }
+
+          html, body {
+            background-color: var(--bg-navy-deep) !important;
+            font-family: var(--font-body) !important;
+            line-height: ${activeTokens['body-line-height']} !important;
+          }
+          h1, h2, h3, h4, .font-headline {
+            font-family: var(--font-headline) !important;
+            letter-spacing: ${activeTokens['headline-tracking']} !important;
+          }
+          .font-mono, [class*="font-mono"] {
+            font-family: var(--font-mono) !important;
+          }
+
+          /* Background Surfaces */
+          .bg-\\[\\#070B14\\], [class*="bg-[#070B14]"] { background-color: var(--bg-navy-deep) !important; }
+          .bg-\\[\\#111726\\], [class*="bg-[#111726]"] { background-color: var(--bg-graphite) !important; }
+          .bg-\\[\\#F7F5F0\\], [class*="bg-[#F7F5F0]"] { background-color: var(--bg-warm-white) !important; }
+          .bg-\\[\\#FFFFFF\\], [class*="bg-[#FFFFFF]"], .bg-white { background-color: var(--bg-card-light) !important; }
+
+          /* Typography / Inks */
+          .text-\\[\\#F9FAFB\\], [class*="text-[#F9FAFB]"] { color: var(--text-on-dark) !important; }
+          .text-\\[\\#9CA3AF\\], [class*="text-[#9CA3AF]"], .text-gray-400 { color: var(--text-muted-dark) !important; }
+          .text-\\[\\#0F172A\\], [class*="text-[#0F172A]"] { color: var(--text-on-light) !important; }
+          .text-\\[\\#475569\\], [class*="text-[#475569]"] { color: var(--text-muted-light) !important; }
+
+          /* Accents & Borders */
+          .bg-\\[\\#C59B5F\\], [class*="bg-[#C59B5F]"] { background-color: var(--accent-bronze) !important; }
+          .text-\\[\\#C59B5F\\], [class*="text-[#C59B5F]"] { color: var(--accent-bronze) !important; }
+          .border-\\[\\#C59B5F\\], [class*="border-[#C59B5F]"] { border-color: var(--accent-bronze) !important; }
+          .text-\\[\\#E5C185\\], [class*="text-[#E5C185]"] { color: var(--accent-gold-bright) !important; }
+          .border-\\[\\#E5C185\\], [class*="border-[#E5C185]"] { border-color: var(--accent-gold-bright) !important; }
+        `;
       } catch (e) {
         // Cross-origin fallback (when testing under restrictive origins)
       }
@@ -1729,11 +2307,12 @@ No changes required.`;
       if (count > 0) {
         md += `## ⚡ Dialed-In Modifications (${count} Changes)
 
-| Token Name | Baseline Default | Dialed-In Value | Target File |
-| :--- | :--- | :--- | :--- |
+| Token Role | CSS Variable | Baseline Default | Dialed-In Value | Assigned Elements / Usage |
+| :--- | :--- | :--- | :--- | :--- |
 `;
         Object.values(modified).forEach(m => {
-          md += `| \`--${m.key}\` | \`${m.from}\` | **\`${m.to}\`** | \`src/styles/businessTheme.css\` |\n`;
+          const meta = TOKEN_METADATA[m.key] || { name: m.key, assignedTo: 'General visual token' };
+          md += `| **${meta.name}** | \`--${m.key}\` | \`${m.from}\` | **\`${m.to}\`** | ${meta.assignedTo} |\n`;
         });
 
         md += `
@@ -1761,6 +2340,15 @@ Paste the following updated variables directly into \`src/styles/businessTheme.c
 
 ## 🏛️ Complete Design Token Registry
 
+| Token Role | CSS Variable | Current Value | Assigned Elements / Usage |
+| :--- | :--- | :--- | :--- |
+`;
+        Object.keys(activeTokens).forEach(key => {
+          const meta = TOKEN_METADATA[key] || { name: key, assignedTo: 'General visual token' };
+          md += `| **${meta.name}** | \`--${key}\` | \`${activeTokens[key]}\` | ${meta.assignedTo} |\n`;
+        });
+
+        md += `
 \`\`\`css
 :root {
 `;
@@ -1803,7 +2391,9 @@ Paste the following updated variables directly into \`src/styles/businessTheme.c
         tw += `  --color-warm-white: ${activeTokens['bg-warm-white']};\n`;
         tw += `  --color-card-light: ${activeTokens['bg-card-light']};\n`;
         tw += `  --color-text-on-dark: ${activeTokens['text-on-dark']};\n`;
+        tw += `  --color-text-muted-dark: ${activeTokens['text-muted-dark'] || '#9CA3AF'};\n`;
         tw += `  --color-text-on-light: ${activeTokens['text-on-light']};\n`;
+        tw += `  --color-text-muted-light: ${activeTokens['text-muted-light'] || '#475569'};\n`;
         tw += `  --color-accent-bronze: ${activeTokens['accent-bronze']};\n`;
         tw += `  --color-accent-gold: ${activeTokens['accent-gold-bright']};\n`;
         tw += `}\n`;
