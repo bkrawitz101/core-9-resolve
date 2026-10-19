@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CORE9 RESOLVE™ Styleguide Studio &amp; Design Token Workbench</title>
+  <meta name="description" content="Interactive Design Token Workbench and Visual Styleguide Studio for CORE9 RESOLVE™ Business. Live whole-site browsing, real-time CSS token injection, diff changelog, and markdown export." />
+
+  <!-- Google Fonts: Complete Comprehensive Suite for Strategic Architectural Design -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Fira+Code:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300..700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Marcellus&family=Montserrat:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Studio Chrome Theme */
+      --studio-bg: #070B14;
+      --studio-sidebar: #0C1220;
+      --studio-surface: #111726;
+      --studio-surface-hover: #162038;
+      --studio-border: rgba(255, 255, 255, 0.09);
+      --studio-border-accent: rgba(197, 155, 95, 0.35);
+      --studio-text: #F9FAFB;
+      --studio-text-muted: #9CA3AF;
+      --studio-bronze: #C59B5F;
+      --studio-bronze-light: #E5C185;
+      --studio-modified-green: #10B981;
+      --studio-diff-badge: #E5C185;
+      --studio-radius: 6px;
+
+      /* Active Dynamic Design Tokens (Default Baseline) */
+      --bg-navy-deep: #070B14;
+      --bg-graphite: #111726;
+      --bg-warm-white: #F7F5F0;
+      --bg-card-light: #FFFFFF;
+      --text-on-dark: #F9FAFB;
+      --text-muted-dark: #9CA3AF;
+      --text-on-light: #0F172A;
+      --text-muted-light: #475569;
+      --accent-bronze: #C59B5F;
+      --accent-gold-bright: #E5C185;
+      --font-headline: 'Plus Jakarta Sans', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --headline-weight: 700;
+      --headline-tracking: -0.025em;
+      --body-weight: 400;
+      --body-line-height: 1.65;
+      --mono-tracking: 0.12em;
+      --hero-heading-size: 3.5rem;
+      --section-heading-size: 2.25rem;
+      --border-radius-card: 8px;
+      --vector-glow-opacity: 0.85;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--studio-bg);
+      color: var(--studio-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation Bar */
+    .studio-header {
+      background: rgba(12, 18, 32, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--studio-border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .studio-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .studio-logo-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      background: #111726;
+      border: 1px solid var(--studio-bronze);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--studio-bronze-light);
+    }
+
+    .studio-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .studio-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      background: rgba(197, 155, 95, 0.15);
+      border: 1px solid rgba(197, 155, 95, 0.3);
+      color: var(--studio-bronze-light);
+    }
+
+    .studio-toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    /* Filter & Counter Indicator */
+    .diff-counter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34D399;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .diff-counter-pill.has-changes {
+      background: rgba(229, 193, 133, 0.15);
+      border-color: rgba(229, 193, 133, 0.5);
+      color: var(--studio-bronze-light);
+    }
+
+    .btn-action {
+      background: var(--studio-surface);
+      border: 1px solid var(--studio-border);
+      color: var(--studio-text);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--studio-radius);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: var(--studio-surface-hover);
+      border-color: var(--studio-bronze);
+      color: #FFFFFF;
+    }
+
+    .btn-action-primary {
+      background: var(--studio-bronze);
+      border-color: var(--studio-bronze-light);
+      color: #070B14;
+      font-weight: 600;
+    }
+
+    .btn-action-primary:hover {
+      background: #D4AF37;
+      color: #000000;
+      box-shadow: 0 0 12px rgba(197, 155, 95, 0.35);
+    }
+
+    /* Studio Main Layout */
+    .studio-container {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      flex: 1;
+      height: calc(100vh - 64px);
+      overflow: hidden;
+    }
+
+    /* Left Sidebar: Controls & Token Inspector */
+    .controls-panel {
+      background: var(--studio-sidebar);
+      border-right: 1px solid var(--studio-border);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .controls-top-bar {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--studio-border);
+      background: rgba(17, 23, 38, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .view-filter-switch {
+      display: flex;
+      background: #070B14;
+      border: 1px solid var(--studio-border);
+      border-radius: 4px;
+      padding: 2px;
+    }
+
+    .view-filter-btn {
+      background: transparent;
+      border: none;
+      color: var(--studio-text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .view-filter-btn.active {
+      background: var(--studio-surface-hover);
+      color: #FFFFFF;
+      font-weight: 600;
+      border: 1px solid var(--studio-border-accent);
+    }
+
+    .preset-selector-group {
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--studio-border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--studio-text-muted);
+    }
+
+    .preset-dropdown {
+      background: #070B14;
+      border: 1px solid var(--studio-border);
+      color: var(--studio-text);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      flex: 1;
+      outline: none;
+    }
+
+    .preset-dropdown:focus {
+      border-color: var(--studio-bronze);
+    }
+
+    /* Accordion Control Sections */
+    .controls-content {
+      padding: 1rem 1.25rem 2.5rem;
+      flex: 1;
+    }
+
+    .control-section {
+      margin-bottom: 1.5rem;
+      background: var(--studio-surface);
+      border: 1px solid var(--studio-border);
+      border-radius: var(--studio-radius);
+      overflow: hidden;
+    }
+
+    .section-header {
+      padding: 0.75rem 1rem;
+      background: rgba(7, 11, 20, 0.4);
+      border-bottom: 1px solid var(--studio-border);
+      font-family: var(--font-headline);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--studio-bronze-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    /* Individual Token Row */
+    .token-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: relative;
+    }
+
+    .token-row.is-modified {
+      background: rgba(229, 193, 133, 0.04);
+      border-left: 2px solid var(--studio-bronze);
+      padding-left: 0.5rem;
+      margin-left: -0.5rem;
+    }
+
+    .token-row.diff-hidden {
+      display: none !important;
+    }
+
+    .token-label-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+    }
+
+    .token-name {
+      font-family: var(--font-mono);
+      color: var(--studio-text);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .token-tag-modified {
+      font-size: 0.6rem;
+      font-family: var(--font-mono);
+      background: rgba(229, 193, 133, 0.2);
+      color: var(--studio-bronze-light);
+      padding: 0.05rem 0.35rem;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+
+    .token-val-display {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--studio-text-muted);
+    }
+
+    .token-input-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .color-picker-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      border: 1px solid var(--studio-border);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .color-picker-input {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      opacity: 0;
+    }
+
+    .color-picker-swatch {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .token-text-input {
+      background: #070B14;
+      border: 1px solid var(--studio-border);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      flex: 1;
+      outline: none;
+    }
+
+    .token-text-input:focus {
+      border-color: var(--studio-bronze);
+    }
+
+    .token-slider {
+      flex: 1;
+      accent-color: var(--studio-bronze);
+      cursor: pointer;
+    }
+
+    .token-select {
+      background: #070B14;
+      border: 1px solid var(--studio-border);
+      color: #FFFFFF;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      width: 100%;
+      outline: none;
+    }
+
+    .token-select:focus {
+      border-color: var(--studio-bronze);
+    }
+
+    /* Right Preview & Live Canvas */
+    .preview-panel {
+      display: flex;
+      flex-direction: column;
+      background: #05070D;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-header-bar {
+      height: 52px;
+      background: var(--studio-sidebar);
+      border-bottom: 1px solid var(--studio-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.25rem;
+    }
+
+    .tab-group {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--studio-text-muted);
+      font-family: var(--font-headline);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 0.85rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: #FFFFFF;
+      background: var(--studio-surface);
+    }
+
+    .tab-btn.active {
+      color: #070B14;
+      background: var(--studio-bronze);
+      font-weight: 700;
+    }
+
+    .viewport-btn-group {
+      display: flex;
+      background: #070B14;
+      border: 1px solid var(--studio-border);
+      border-radius: 4px;
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .btn-vp {
+      background: transparent;
+      border: none;
+      color: var(--studio-text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-vp.active {
+      background: var(--studio-surface-hover);
+      color: var(--studio-bronze-light);
+      font-weight: 700;
+      border: 1px solid rgba(197, 155, 95, 0.3);
+    }
+
+    /* Canvas Scroll Area */
+    .preview-canvas-container {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      background: #05070D;
+    }
+
+    /* View 0: Live Whole-Site Browser */
+    .site-browser-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #070B14;
+      border: 1px solid var(--studio-border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      transition: max-width 0.3s ease;
+      margin: 0 auto;
+    }
+
+    .site-browser-toolbar {
+      background: #111726;
+      border-bottom: 1px solid var(--studio-border);
+      height: 42px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.85rem;
+      gap: 0.75rem;
+    }
+
+    .browser-nav-btn {
+      background: transparent;
+      border: 1px solid var(--studio-border);
+      color: var(--studio-text-muted);
+      border-radius: 4px;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.7rem;
+    }
+
+    .browser-nav-btn:hover {
+      background: var(--studio-surface-hover);
+      color: #FFFFFF;
+    }
+
+    .browser-url-bar {
+      flex: 1;
+      background: #070B14;
+      border: 1px solid var(--studio-border);
+      border-radius: 4px;
+      padding: 0.25rem 0.65rem;
+      color: var(--studio-text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .browser-page-select {
+      background: transparent;
+      border: none;
+      color: var(--studio-bronze-light);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .browser-sync-status {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: #34D399;
+    }
+
+    .browser-iframe {
+      width: 100%;
+      flex: 1;
+      border: none;
+      background: #070B14;
+    }
+
+    /* View 1: Component Sandbox */
+    .sandbox-container {
+      width: 100%;
+      max-width: 1000px;
+      display: none;
+      flex-direction: column;
+      gap: 2rem;
+      padding-bottom: 3rem;
+    }
+
+    .sandbox-card {
+      background: var(--studio-surface);
+      border: 1px solid var(--studio-border);
+      border-radius: var(--studio-radius);
+      padding: 1.5rem;
+    }
+
+    .sandbox-card-title {
+      font-family: var(--font-headline);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--studio-bronze-light);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--studio-border);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Code View Containers */
+    .code-view-container {
+      width: 100%;
+      max-width: 1000px;
+      display: none;
+      flex-direction: column;
+      background: #0B0F19;
+      border: 1px solid var(--studio-border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-view-header {
+      background: #111726;
+      border-bottom: 1px solid var(--studio-border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .code-pre {
+      padding: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: #D1D5DB;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111726;
+      border: 1px solid var(--studio-bronze);
+      color: #FFFFFF;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.2);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.15);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--studio-bronze);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Studio Header -->
+  <header class="studio-header">
+    <div class="studio-brand-group">
+      <div class="studio-logo-badge">9</div>
+      <div>
+        <div class="studio-title">
+          <span>CORE9 RESOLVE™</span>
+          <span class="studio-badge">Styleguide Studio</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="studio-toolbar-actions">
+      <!-- Active Changes Counter Badge / Diff Filter Shortcut -->
+      <button id="diff-counter-btn" class="diff-counter-pill" onclick="toggleDiffFilter()">
+        <span id="diff-status-dot">●</span>
+        <span id="diff-count-text">0 Tokens Modified (Baseline Defaults)</span>
+      </button>
+
+      <button class="btn-action" onclick="resetToBrandDefaults()" title="Reset all tokens back to CORE9 production spec">
+        ↺ Reset Defaults
+      </button>
+
+      <button class="btn-action" onclick="copyShareableUrl()" title="Create a shareable URL containing your exact tweaked settings">
+        🔗 Copy Share Link
+      </button>
+
+      <button class="btn-action btn-action-primary" onclick="downloadMarkdownDiff()" title="Download a clean .md changelog file of dialed-in changes">
+        💾 Export Updates (.md)
+      </button>
+    </div>
+  </header>
+
+  <!-- Studio Workspace Container -->
+  <main class="studio-container">
+
+    <!-- LEFT SIDEBAR: Design Token Workbench -->
+    <aside class="controls-panel">
+      
+      <!-- Top Controls Filter Bar -->
+      <div class="controls-top-bar">
+        <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--studio-text-muted); text-transform: uppercase;">
+          Filter View:
+        </span>
+        <div class="view-filter-switch">
+          <button id="filter-all-btn" class="view-filter-btn active" onclick="setViewFilter('all')">
+            Show All
+          </button>
+          <button id="filter-diff-btn" class="view-filter-btn" onclick="setViewFilter('diff')">
+            Modified Only (Diff)
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Preset Selector -->
+      <div class="preset-selector-group">
+        <span>Preset:</span>
+        <select id="preset-select" class="preset-dropdown" onchange="applyPreset(this.value)">
+          <option value="baseline" selected>🏛️ CORE9 Baseline Specification (Default)</option>
+          <option value="obsidian-deep">🌑 Deep Obsidian Navy Contrast</option>
+          <option value="warm-bronze">✨ Rich Luminous Bronze / Champagne</option>
+          <option value="architectural-crisp">📐 Stark Architectural Monolith</option>
+        </select>
+      </div>
+
+      <!-- Accordion Form Controls -->
+      <div class="controls-content">
+
+        <!-- 1. Primary Colors & Surfaces -->
+        <section class="control-section">
+          <div class="section-header">
+            <span>1. Core Color Palette &amp; Surfaces</span>
+          </div>
+          <div class="section-body">
+            
+            <!-- Obsidian Navy -->
+            <div class="token-row" id="row-bg-navy-deep">
+              <div class="token-label-bar">
+                <span class="token-name">--bg-navy-deep</span>
+                <span class="token-val-display" id="val-bg-navy-deep">#070B14</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-bg-navy-deep" value="#070B14" oninput="updateColorToken('bg-navy-deep', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-bg-navy-deep" style="background-color: #070B14;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-bg-navy-deep" value="#070B14" onchange="updateColorToken('bg-navy-deep', this.value)" />
+              </div>
+            </div>
+
+            <!-- Architectural Graphite -->
+            <div class="token-row" id="row-bg-graphite">
+              <div class="token-label-bar">
+                <span class="token-name">--bg-graphite</span>
+                <span class="token-val-display" id="val-bg-graphite">#111726</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-bg-graphite" value="#111726" oninput="updateColorToken('bg-graphite', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-bg-graphite" style="background-color: #111726;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-bg-graphite" value="#111726" onchange="updateColorToken('bg-graphite', this.value)" />
+              </div>
+            </div>
+
+            <!-- Restrained Bronze Accent -->
+            <div class="token-row" id="row-accent-bronze">
+              <div class="token-label-bar">
+                <span class="token-name">--accent-bronze</span>
+                <span class="token-val-display" id="val-accent-bronze">#C59B5F</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-accent-bronze" value="#C59B5F" oninput="updateColorToken('accent-bronze', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-accent-bronze" style="background-color: #C59B5F;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-accent-bronze" value="#C59B5F" onchange="updateColorToken('accent-bronze', this.value)" />
+              </div>
+            </div>
+
+            <!-- Luminous Gold Edge -->
+            <div class="token-row" id="row-accent-gold-bright">
+              <div class="token-label-bar">
+                <span class="token-name">--accent-gold-bright</span>
+                <span class="token-val-display" id="val-accent-gold-bright">#E5C185</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-accent-gold-bright" value="#E5C185" oninput="updateColorToken('accent-gold-bright', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-accent-gold-bright" style="background-color: #E5C185;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-accent-gold-bright" value="#E5C185" onchange="updateColorToken('accent-gold-bright', this.value)" />
+              </div>
+            </div>
+
+            <!-- Warm White Surface -->
+            <div class="token-row" id="row-bg-warm-white">
+              <div class="token-label-bar">
+                <span class="token-name">--bg-warm-white (Sec 02/04)</span>
+                <span class="token-val-display" id="val-bg-warm-white">#F7F5F0</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-bg-warm-white" value="#F7F5F0" oninput="updateColorToken('bg-warm-white', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-bg-warm-white" style="background-color: #F7F5F0;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-bg-warm-white" value="#F7F5F0" onchange="updateColorToken('bg-warm-white', this.value)" />
+              </div>
+            </div>
+
+            <!-- Crisp Alabaster Card -->
+            <div class="token-row" id="row-bg-card-light">
+              <div class="token-label-bar">
+                <span class="token-name">--bg-card-light</span>
+                <span class="token-val-display" id="val-bg-card-light">#FFFFFF</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-bg-card-light" value="#FFFFFF" oninput="updateColorToken('bg-card-light', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-bg-card-light" style="background-color: #FFFFFF;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-bg-card-light" value="#FFFFFF" onchange="updateColorToken('bg-card-light', this.value)" />
+              </div>
+            </div>
+
+            <!-- Light Ink (Text on Dark) -->
+            <div class="token-row" id="row-text-on-dark">
+              <div class="token-label-bar">
+                <span class="token-name">--text-on-dark</span>
+                <span class="token-val-display" id="val-text-on-dark">#F9FAFB</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-text-on-dark" value="#F9FAFB" oninput="updateColorToken('text-on-dark', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-text-on-dark" style="background-color: #F9FAFB;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-text-on-dark" value="#F9FAFB" onchange="updateColorToken('text-on-dark', this.value)" />
+              </div>
+            </div>
+
+            <!-- Dark Ink (Text on Light) -->
+            <div class="token-row" id="row-text-on-light">
+              <div class="token-label-bar">
+                <span class="token-name">--text-on-light</span>
+                <span class="token-val-display" id="val-text-on-light">#0F172A</span>
+              </div>
+              <div class="token-input-group">
+                <div class="color-picker-wrap">
+                  <input type="color" class="color-picker-input" id="picker-text-on-light" value="#0F172A" oninput="updateColorToken('text-on-light', this.value)" />
+                  <div class="color-picker-swatch" id="swatch-text-on-light" style="background-color: #0F172A;"></div>
+                </div>
+                <input type="text" class="token-text-input" id="text-text-on-light" value="#0F172A" onchange="updateColorToken('text-on-light', this.value)" />
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- 2. Typography Stacks & Hierarchy -->
+        <section class="control-section">
+          <div class="section-header">
+            <span>2. Typography &amp; Scale Authority</span>
+          </div>
+          <div class="section-body">
+            
+            <!-- Headline Font Family -->
+            <div class="token-row" id="row-font-headline">
+              <div class="token-label-bar">
+                <span class="token-name">Headline Font Family</span>
+                <span class="token-val-display" id="val-font-headline">Plus Jakarta Sans</span>
+              </div>
+              <select class="token-select" id="select-font-headline" onchange="updateGenericToken('font-headline', this.value)">
+                <optgroup label="Primary Recommended">
+                  <option value="'Plus Jakarta Sans', sans-serif" selected>Plus Jakarta Sans (Default)</option>
+                  <option value="'Inter', sans-serif">Inter (Precision Modern)</option>
+                  <option value="'Cinzel', serif">Cinzel (Classical Architectural)</option>
+                  <option value="'Cormorant Garamond', serif">Cormorant Garamond (Refined Editorial)</option>
+                </optgroup>
+                <optgroup label="Modern Executive Sans">
+                  <option value="'Outfit', sans-serif">Outfit (Geometric Minimal)</option>
+                  <option value="'Manrope', sans-serif">Manrope (Clean Tech)</option>
+                  <option value="'Space Grotesk', sans-serif">Space Grotesk (Distinctive)</option>
+                  <option value="'Syne', sans-serif">Syne (Bold Sculptural)</option>
+                  <option value="'Urbanist', sans-serif">Urbanist (Sleek)</option>
+                </optgroup>
+                <optgroup label="Commanding Serifs">
+                  <option value="'Bodoni Moda', serif">Bodoni Moda (High Contrast Luxury)</option>
+                  <option value="'Playfair Display', serif">Playfair Display (Executive)</option>
+                  <option value="'Marcellus', serif">Marcellus (Architectural Roman)</option>
+                  <option value="'Fraunces', serif">Fraunces (Warm Contemporary)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <!-- Body Font Family -->
+            <div class="token-row" id="row-font-body">
+              <div class="token-label-bar">
+                <span class="token-name">Body Font Family</span>
+                <span class="token-val-display" id="val-font-body">Inter</span>
+              </div>
+              <select class="token-select" id="select-font-body" onchange="updateGenericToken('font-body', this.value)">
+                <option value="'Inter', sans-serif" selected>Inter (Default Crisp)</option>
+                <option value="'DM Sans', sans-serif">DM Sans</option>
+                <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                <option value="'Manrope', sans-serif">Manrope</option>
+                <option value="'Sora', sans-serif">Sora</option>
+              </select>
+            </div>
+
+            <!-- Monospace / Architectural Index Font -->
+            <div class="token-row" id="row-font-mono">
+              <div class="token-label-bar">
+                <span class="token-name">Indices Monospace Font</span>
+                <span class="token-val-display" id="val-font-mono">JetBrains Mono</span>
+              </div>
+              <select class="token-select" id="select-font-mono" onchange="updateGenericToken('font-mono', this.value)">
+                <option value="'JetBrains Mono', monospace" selected>JetBrains Mono (Default)</option>
+                <option value="'Fira Code', monospace">Fira Code</option>
+                <option value="'IBM Plex Mono', monospace">IBM Plex Mono</option>
+                <option value="'Space Mono', monospace">Space Mono</option>
+                <option value="'DM Mono', monospace">DM Mono</option>
+              </select>
+            </div>
+
+            <!-- Headline Letter Spacing (Tracking) -->
+            <div class="token-row" id="row-headline-tracking">
+              <div class="token-label-bar">
+                <span class="token-name">Headline Tracking</span>
+                <span class="token-val-display" id="val-headline-tracking">-0.025em</span>
+              </div>
+              <div class="token-input-group">
+                <input type="range" class="token-slider" id="slider-headline-tracking" min="-0.05" max="0.10" step="0.005" value="-0.025" oninput="updateGenericToken('headline-tracking', this.value + 'em')" />
+              </div>
+            </div>
+
+            <!-- Body Line Height -->
+            <div class="token-row" id="row-body-line-height">
+              <div class="token-label-bar">
+                <span class="token-name">Body Line Height</span>
+                <span class="token-val-display" id="val-body-line-height">1.65</span>
+              </div>
+              <div class="token-input-group">
+                <input type="range" class="token-slider" id="slider-body-line-height" min="1.4" max="2.0" step="0.05" value="1.65" oninput="updateGenericToken('body-line-height', this.value)" />
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- 3. Geometry, Vectors & Radii -->
+        <section class="control-section">
+          <div class="section-header">
+            <span>3. Geometry, Vectors &amp; Radii</span>
+          </div>
+          <div class="section-body">
+            
+            <!-- Card Border Radius -->
+            <div class="token-row" id="row-border-radius-card">
+              <div class="token-label-bar">
+                <span class="token-name">Card Border Radius</span>
+                <span class="token-val-display" id="val-border-radius-card">8px</span>
+              </div>
+              <div class="token-input-group">
+                <input type="range" class="token-slider" id="slider-border-radius-card" min="0" max="20" step="1" value="8" oninput="updateGenericToken('border-radius-card', this.value + 'px')" />
+              </div>
+            </div>
+
+            <!-- Vector Convergence Glow -->
+            <div class="token-row" id="row-vector-glow-opacity">
+              <div class="token-label-bar">
+                <span class="token-name">Convergence Vector Glow</span>
+                <span class="token-val-display" id="val-vector-glow-opacity">85%</span>
+              </div>
+              <div class="token-input-group">
+                <input type="range" class="token-slider" id="slider-vector-glow-opacity" min="0.2" max="1.0" step="0.05" value="0.85" oninput="updateGenericToken('vector-glow-opacity', this.value)" />
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </aside>
+
+    <!-- RIGHT PANEL: Live Browser, Component Sandbox & Markdown Spec Tabs -->
+    <section class="preview-panel">
+      
+      <!-- Preview Header Tabs & Viewport Switcher -->
+      <div class="preview-header-bar">
+        <div class="tab-group">
+          <button id="tab-btn-site" class="tab-btn active" onclick="switchPreviewTab('site')">
+            🌐 Live Whole-Site Browser
+          </button>
+          <button id="tab-btn-sandbox" class="tab-btn" onclick="switchPreviewTab('sandbox')">
+            📐 Component Sandbox
+          </button>
+          <button id="tab-btn-markdown" class="tab-btn" onclick="switchPreviewTab('markdown')">
+            📄 Markdown Spec (.md)
+          </button>
+          <button id="tab-btn-css" class="tab-btn" onclick="switchPreviewTab('css')">
+            🎨 CSS Variables
+          </button>
+          <button id="tab-btn-tailwind" class="tab-btn" onclick="switchPreviewTab('tailwind')">
+            ⚡ Tailwind v4
+          </button>
+          <button id="tab-btn-json" class="tab-btn" onclick="switchPreviewTab('json')">
+            📦 JSON Tokens
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <!-- Viewport Sizing Controls -->
+          <div class="viewport-btn-group">
+            <button class="btn-vp active" id="vp-fluid" onclick="setCanvasViewport('100%', this)" title="Full Fluid Viewport">↔ 100%</button>
+            <button class="btn-vp" id="vp-desktop" onclick="setCanvasViewport('1280px', this)" title="Desktop (1280px)">💻 1280</button>
+            <button class="btn-vp" id="vp-tablet" onclick="setCanvasViewport('768px', this)" title="Tablet (768px)">📱 768</button>
+            <button class="btn-vp" id="vp-mobile" onclick="setCanvasViewport('390px', this)" title="Mobile (390px)">📲 390</button>
+          </div>
+
+          <button class="btn-action" onclick="copyCurrentTabContent()">
+            📋 Copy Active
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Canvas Area -->
+      <div class="preview-canvas-container" id="canvas-scroll-container">
+        
+        <!-- Tab 1: Live Whole-Site Browser (Full Interactive Website) -->
+        <div id="view-site" class="site-browser-container">
+          <!-- Mini Browser Header Toolbar -->
+          <div class="site-browser-toolbar">
+            <div style="display: flex; align-items: center; gap: 0.35rem;">
+              <button class="browser-nav-btn" onclick="iframeGoBack()" title="Back">◀</button>
+              <button class="browser-nav-btn" onclick="iframeGoForward()" title="Forward">▶</button>
+              <button class="browser-nav-btn" onclick="reloadIframe()" title="Reload Page">⟳</button>
+              <button class="browser-nav-btn" onclick="navigateIframe('#')" title="Home Page">🏠</button>
+            </div>
+
+            <!-- Quick Page Selector Dropdown -->
+            <div class="browser-url-bar">
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <span style="color: var(--studio-bronze); font-size: 0.75rem;">🔒</span>
+                <select id="browser-page-select" class="browser-page-select" onchange="navigateIframe(this.value)">
+                  <option value="#" selected>🏠 Stage 1: Landing Page (Hero, Recognition, Difference, Pathway, Invitation)</option>
+                  <option value="#approach">📊 Stage 2: Our Approach &amp; Functional Gaps Matrix</option>
+                  <option value="#team">👤 Stage 2: Our Team (Standalone Digital Visiting Card)</option>
+                  <option value="#system">🏛️ Stage 3: The Living-System Framework (Four Spheres)</option>
+                  <option value="#insights">🎙️ Stage 4: Strategic Guidance &amp; Broadcasts</option>
+                </select>
+              </div>
+
+              <div class="browser-sync-status">
+                <span>●</span>
+                <span>Live Tokens Synced</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Embedded Website Iframe -->
+          <iframe id="website-live-iframe" class="browser-iframe" src="./index.html"></iframe>
+        </div>
+
+        <!-- Tab 2: Component Sandbox -->
+        <div id="view-sandbox" class="sandbox-container">
+          
+          <!-- Hero Section Sample -->
+          <div class="sandbox-card" style="background: var(--bg-navy-deep); border-color: rgba(255,255,255,0.1);">
+            <div class="sandbox-card-title">Live Hero Headline &amp; Pacing Sample</div>
+            <div style="max-width: 750px; margin: 0 auto; text-align: center; padding: 2rem 1rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent-bronze); letter-spacing: var(--mono-tracking); text-transform: uppercase; margin-bottom: 1rem;">
+                Whole-System Organizational Advisory
+              </div>
+              <h1 style="font-family: var(--font-headline); font-weight: var(--headline-weight); letter-spacing: var(--headline-tracking); font-size: 2.5rem; line-height: 1.1; color: var(--text-on-dark); margin-bottom: 1.5rem;">
+                Your Business Is Working Hard.<br />
+                <span style="color: var(--accent-gold-bright);">But Is It Working Together?</span>
+              </h1>
+              <p style="font-family: var(--font-body); font-size: 1rem; line-height: var(--body-line-height); color: var(--text-muted-dark); margin-bottom: 1rem;">
+                Talented people. Ambitious goals. Valuable resources. Yet something keeps getting in the way.
+              </p>
+              <button style="background: var(--accent-bronze); color: #070B14; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; padding: 0.85rem 1.75rem; border-radius: var(--border-radius-card); border: 1px solid var(--accent-gold-bright); cursor: pointer; margin-top: 1rem;">
+                Discover What’s Holding You Back →
+              </button>
+            </div>
+          </div>
+
+          <!-- Recognition Cards Sample (Warm White Section) -->
+          <div class="sandbox-card" style="background: var(--bg-warm-white); border-color: rgba(15,23,42,0.1);">
+            <div class="sandbox-card-title" style="color: var(--text-on-light); border-color: rgba(15,23,42,0.1);">
+              Recognition Cards Sample (Warm White Canvas)
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div style="background: var(--bg-card-light); padding: 1.5rem; border-radius: var(--border-radius-card); border-left: 3px solid var(--accent-bronze); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent-bronze); font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem;">
+                  Pattern 01
+                </div>
+                <p style="font-family: var(--font-headline); font-weight: 600; font-size: 1.1rem; color: var(--text-on-light); line-height: 1.4;">
+                  "Everyone is busy, but progress is slower than it should be."
+                </p>
+              </div>
+              <div style="background: var(--bg-card-light); padding: 1.5rem; border-radius: var(--border-radius-card); border-left: 3px solid var(--accent-bronze); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent-bronze); font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem;">
+                  Pattern 02
+                </div>
+                <p style="font-family: var(--font-headline); font-weight: 600; font-size: 1.1rem; color: var(--text-on-light); line-height: 1.4;">
+                  "Problems keep returning, even after you’ve solved them."
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab 3: Markdown Spec (.md) View -->
+        <div id="view-markdown" class="code-view-container">
+          <div class="code-view-header">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span style="font-family: var(--font-headline); font-weight: 700; font-size: 0.85rem; color: var(--studio-bronze-light);">
+                📄 CORE9_Design_Tokens_Changelog.md
+              </span>
+              <label style="display: flex; align-items: center; gap: 0.35rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--studio-text-muted); cursor: pointer;">
+                <input type="checkbox" id="md-changes-only-check" checked onchange="renderMarkdownCode()" />
+                Export Changes Only (Diff)
+              </label>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn-action" onclick="copyMarkdown()">📋 Copy .md</button>
+              <button class="btn-action btn-action-primary" onclick="downloadMarkdownDiff()">💾 Download .md</button>
+            </div>
+          </div>
+          <pre class="code-pre" id="markdown-code-block"></pre>
+        </div>
+
+        <!-- Tab 4: CSS Variables View -->
+        <div id="view-css" class="code-view-container">
+          <div class="code-view-header">
+            <span style="font-family: var(--font-headline); font-weight: 700; font-size: 0.85rem; color: var(--studio-bronze-light);">
+              🎨 CSS Custom Properties (:root)
+            </span>
+            <button class="btn-action" onclick="copyCss()">📋 Copy CSS</button>
+          </div>
+          <pre class="code-pre" id="css-code-block"></pre>
+        </div>
+
+        <!-- Tab 5: Tailwind v4 Theme View -->
+        <div id="view-tailwind" class="code-view-container">
+          <div class="code-view-header">
+            <span style="font-family: var(--font-headline); font-weight: 700; font-size: 0.85rem; color: var(--studio-bronze-light);">
+              ⚡ Tailwind v4 @theme Configuration
+            </span>
+            <button class="btn-action" onclick="copyTailwind()">📋 Copy Tailwind</button>
+          </div>
+          <pre class="code-pre" id="tailwind-code-block"></pre>
+        </div>
+
+        <!-- Tab 6: JSON Tokens View -->
+        <div id="view-json" class="code-view-container">
+          <div class="code-view-header">
+            <span style="font-family: var(--font-headline); font-weight: 700; font-size: 0.85rem; color: var(--studio-bronze-light);">
+              📦 JSON Design Tokens Format
+            </span>
+            <button class="btn-action" onclick="copyJson()">📋 Copy JSON</button>
+          </div>
+          <pre class="code-pre" id="json-code-block"></pre>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast">Action completed successfully</div>
+
+  <script>
+    /* ==========================================================================
+       CORE9 RESOLVE™ — EXACT 100% PRODUCTION BASELINE DEFAULTS
+       ========================================================================== */
+    const BASELINE_DEFAULTS = {
+      'bg-navy-deep': '#070B14',
+      'bg-graphite': '#111726',
+      'accent-bronze': '#C59B5F',
+      'accent-gold-bright': '#E5C185',
+      'bg-warm-white': '#F7F5F0',
+      'bg-card-light': '#FFFFFF',
+      'text-on-dark': '#F9FAFB',
+      'text-on-light': '#0F172A',
+      'font-headline': "'Plus Jakarta Sans', sans-serif",
+      'font-body': "'Inter', sans-serif",
+      'font-mono': "'JetBrains Mono', monospace",
+      'headline-tracking': '-0.025em',
+      'body-line-height': '1.65',
+      'border-radius-card': '8px',
+      'vector-glow-opacity': '0.85'
+    };
+
+    // Active state clone
+    let activeTokens = { ...BASELINE_DEFAULTS };
+    let activeFilter = 'all'; // 'all' or 'diff'
+    let activeTab = 'site';
+
+    /* ==========================================================================
+       INITIALIZATION & URL HASH PARSER
+       ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Check for URL encoded preset/tokens
+      parseUrlHashTokens();
+
+      // 2. Initialize inputs with active tokens
+      syncInputsFromState();
+
+      // 3. Render all code outputs
+      renderAllCodeOutputs();
+
+      // 4. Initial iframe injection setup
+      const iframe = document.getElementById('website-live-iframe');
+      if (iframe) {
+        iframe.addEventListener('load', () => {
+          injectTokensIntoIframe();
+        });
+      }
+
+      // 5. Update diff counters
+      updateDiffCounter();
+    });
+
+    /* ==========================================================================
+       STATE & TOKEN MANAGERS
+       ========================================================================== */
+    function updateColorToken(key, value) {
+      activeTokens[key] = value.toUpperCase();
+      
+      // Update UI elements
+      const valDisp = document.getElementById(`val-${key}`);
+      const txtInput = document.getElementById(`text-${key}`);
+      const picker = document.getElementById(`picker-${key}`);
+      const swatch = document.getElementById(`swatch-${key}`);
+
+      if (valDisp) valDisp.innerText = activeTokens[key];
+      if (txtInput && txtInput.value !== activeTokens[key]) txtInput.value = activeTokens[key];
+      if (picker && picker.value !== activeTokens[key]) picker.value = activeTokens[key];
+      if (swatch) swatch.style.backgroundColor = activeTokens[key];
+
+      applyTokenChanges();
+    }
+
+    function updateGenericToken(key, value) {
+      activeTokens[key] = value;
+
+      const valDisp = document.getElementById(`val-${key}`);
+      if (valDisp) {
+        // Strip out font fallbacks for cleaner display
+        valDisp.innerText = value.replace(/['",]/g, '').split(' ')[0] || value;
+      }
+
+      applyTokenChanges();
+    }
+
+    function applyTokenChanges() {
+      // 1. Update CSS variables on Studio root
+      const root = document.documentElement;
+      Object.keys(activeTokens).forEach(key => {
+        root.style.setProperty(`--${key}`, activeTokens[key]);
+      });
+
+      // 2. Inject into live website iframe
+      injectTokensIntoIframe();
+
+      // 3. Update Diff status
+      updateDiffCounter();
+
+      // 4. Re-render code tabs
+      renderAllCodeOutputs();
+    }
+
+    /* ==========================================================================
+       DIFF ENGINE & COUNTERS
+       ========================================================================== */
+    function getModifiedTokens() {
+      const modified = {};
+      Object.keys(activeTokens).forEach(key => {
+        const cleanActive = (activeTokens[key] + '').trim().toLowerCase();
+        const cleanBase = (BASELINE_DEFAULTS[key] + '').trim().toLowerCase();
+        if (cleanActive !== cleanBase) {
+          modified[key] = {
+            key,
+            from: BASELINE_DEFAULTS[key],
+            to: activeTokens[key]
+          };
+        }
+      });
+      return modified;
+    }
+
+    function updateDiffCounter() {
+      const modified = getModifiedTokens();
+      const count = Object.keys(modified).length;
+      const countPill = document.getElementById('diff-counter-btn');
+      const countText = document.getElementById('diff-count-text');
+      const statusDot = document.getElementById('diff-status-dot');
+
+      if (count === 0) {
+        if (countPill) countPill.classList.remove('has-changes');
+        if (countText) countText.innerText = '0 Tokens Modified (Baseline Defaults)';
+        if (statusDot) statusDot.style.color = '#34D399';
+      } else {
+        if (countPill) countPill.classList.add('has-changes');
+        if (countText) countText.innerText = `⚡ ${count} Token${count > 1 ? 's' : ''} Modified`;
+        if (statusDot) statusDot.style.color = '#E5C185';
+      }
+
+      // Mark individual token rows
+      Object.keys(BASELINE_DEFAULTS).forEach(key => {
+        const row = document.getElementById(`row-${key}`);
+        if (!row) return;
+
+        const isMod = !!modified[key];
+        if (isMod) {
+          row.classList.add('is-modified');
+          let tag = row.querySelector('.token-tag-modified');
+          if (!tag) {
+            tag = document.createElement('span');
+            tag.className = 'token-tag-modified';
+            tag.innerText = 'MODIFIED';
+            row.querySelector('.token-name').appendChild(tag);
+          }
+        } else {
+          row.classList.remove('is-modified');
+          const tag = row.querySelector('.token-tag-modified');
+          if (tag) tag.remove();
+        }
+
+        // Apply Diff Filter if active
+        if (activeFilter === 'diff') {
+          if (isMod) {
+            row.classList.remove('diff-hidden');
+          } else {
+            row.classList.add('diff-hidden');
+          }
+        } else {
+          row.classList.remove('diff-hidden');
+        }
+      });
+    }
+
+    function setViewFilter(mode) {
+      activeFilter = mode;
+      document.getElementById('filter-all-btn').classList.toggle('active', mode === 'all');
+      document.getElementById('filter-diff-btn').classList.toggle('active', mode === 'diff');
+      updateDiffCounter();
+    }
+
+    function toggleDiffFilter() {
+      setViewFilter(activeFilter === 'all' ? 'diff' : 'all');
+    }
+
+    /* ==========================================================================
+       IFRAME LIVE INJECTION CONTROLLER
+       ========================================================================== */
+    function injectTokensIntoIframe() {
+      const iframe = document.getElementById('website-live-iframe');
+      if (!iframe) return;
+
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        if (!iframeDoc || !iframeDoc.documentElement) return;
+
+        // Inject active tokens directly into the iframe's root style
+        const docEl = iframeDoc.documentElement;
+        Object.keys(activeTokens).forEach(key => {
+          docEl.style.setProperty(`--${key}`, activeTokens[key]);
+        });
+      } catch (e) {
+        // Cross-origin fallback (when testing under restrictive origins)
+      }
+    }
+
+    function navigateIframe(hash) {
+      const iframe = document.getElementById('website-live-iframe');
+      if (!iframe) return;
+      iframe.src = `./index.html${hash}`;
+    }
+
+    function reloadIframe() {
+      const iframe = document.getElementById('website-live-iframe');
+      if (!iframe) return;
+      iframe.contentWindow.location.reload();
+    }
+
+    function iframeGoBack() {
+      const iframe = document.getElementById('website-live-iframe');
+      if (iframe) iframe.contentWindow.history.back();
+    }
+
+    function iframeGoForward() {
+      const iframe = document.getElementById('website-live-iframe');
+      if (iframe) iframe.contentWindow.history.forward();
+    }
+
+    function setCanvasViewport(width, btn) {
+      const container = document.getElementById('view-site');
+      if (container) {
+        container.style.maxWidth = width;
+      }
+      document.querySelectorAll('.btn-vp').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    /* ==========================================================================
+       PRESETS & RESET ENGINE
+       ========================================================================== */
+    function resetToBrandDefaults() {
+      activeTokens = { ...BASELINE_DEFAULTS };
+      syncInputsFromState();
+      applyTokenChanges();
+      document.getElementById('preset-select').value = 'baseline';
+      showToast('✓ Restored CORE9 Brand Baseline Specification');
+    }
+
+    function applyPreset(presetKey) {
+      if (presetKey === 'baseline') {
+        resetToBrandDefaults();
+        return;
+      }
+
+      if (presetKey === 'obsidian-deep') {
+        activeTokens['bg-navy-deep'] = '#03050A';
+        activeTokens['bg-graphite'] = '#0A0F1A';
+        activeTokens['accent-bronze'] = '#D4AF37';
+        activeTokens['accent-gold-bright'] = '#F3E5AB';
+      } else if (presetKey === 'warm-bronze') {
+        activeTokens['bg-navy-deep'] = '#090D18';
+        activeTokens['accent-bronze'] = '#D99B4B';
+        activeTokens['accent-gold-bright'] = '#FAD089';
+      } else if (presetKey === 'architectural-crisp') {
+        activeTokens['font-headline'] = "'Cinzel', serif";
+        activeTokens['headline-tracking'] = '0.02em';
+        activeTokens['bg-warm-white'] = '#FFFFFF';
+        activeTokens['border-radius-card'] = '2px';
+      }
+
+      syncInputsFromState();
+      applyTokenChanges();
+      showToast(`✓ Applied Preset: ${presetKey}`);
+    }
+
+    function syncInputsFromState() {
+      Object.keys(activeTokens).forEach(key => {
+        const val = activeTokens[key];
+        const valDisp = document.getElementById(`val-${key}`);
+        if (valDisp) valDisp.innerText = val.replace(/['",]/g, '').split(' ')[0] || val;
+
+        const textInput = document.getElementById(`text-${key}`);
+        if (textInput) textInput.value = val;
+
+        const picker = document.getElementById(`picker-${key}`);
+        if (picker && val.startsWith('#')) picker.value = val;
+
+        const swatch = document.getElementById(`swatch-${key}`);
+        if (swatch && val.startsWith('#')) swatch.style.backgroundColor = val;
+
+        const select = document.getElementById(`select-${key}`);
+        if (select) select.value = val;
+
+        const slider = document.getElementById(`slider-${key}`);
+        if (slider) slider.value = parseFloat(val);
+      });
+    }
+
+    /* ==========================================================================
+       MARKDOWN SPEC & DIFF GENERATOR
+       ========================================================================== */
+    function generateMarkdownString() {
+      const changesOnly = document.getElementById('md-changes-only-check')?.checked ?? true;
+      const modified = getModifiedTokens();
+      const count = Object.keys(modified).length;
+      const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+      if (changesOnly && count === 0) {
+        return `# CORE9 RESOLVE™ — Design System Specification
+**Status:** 100% In Sync with Production Baseline (0 Modifications)
+**Date Generated:** ${dateStr}
+
+All current settings match the production baseline specified in:
+- \`CORE9_Business_02_Design_System_Spec.md\`
+- \`src/styles/businessTheme.css\`
+
+No changes required.`;
+      }
+
+      let md = `# CORE9 RESOLVE™ — Design Tokens & Dialed Settings
+**Session Date:** ${dateStr}  
+**Total Changes:** ${count} modified token${count === 1 ? '' : 's'} relative to baseline
+
+---
+
+`;
+
+      if (count > 0) {
+        md += `## ⚡ Dialed-In Modifications (${count} Changes)
+
+| Token Name | Baseline Default | Dialed-In Value | Target File |
+| :--- | :--- | :--- | :--- |
+`;
+        Object.values(modified).forEach(m => {
+          md += `| \`--${m.key}\` | \`${m.from}\` | **\`${m.to}\`** | \`src/styles/businessTheme.css\` |\n`;
+        });
+
+        md += `
+---
+
+## 🛠️ Drop-in CSS Implementation Diff
+
+Paste the following updated variables directly into \`src/styles/businessTheme.css\`:
+
+\`\`\`css
+/* src/styles/businessTheme.css — Dialed-In Changes */
+:root {
+`;
+        Object.values(modified).forEach(m => {
+          md += `  --${m.key}: ${m.to}; /* was: ${m.from} */\n`;
+        });
+        md += `}
+\`\`\`
+`;
+      }
+
+      if (!changesOnly) {
+        md += `
+---
+
+## 🏛️ Complete Design Token Registry
+
+\`\`\`css
+:root {
+`;
+        Object.keys(activeTokens).forEach(key => {
+          md += `  --${key}: ${activeTokens[key]};\n`;
+        });
+        md += `}
+\`\`\`
+`;
+      }
+
+      return md;
+    }
+
+    function renderMarkdownCode() {
+      const mdBlock = document.getElementById('markdown-code-block');
+      if (mdBlock) mdBlock.innerText = generateMarkdownString();
+    }
+
+    function renderAllCodeOutputs() {
+      renderMarkdownCode();
+
+      // CSS Variables
+      const cssBlock = document.getElementById('css-code-block');
+      if (cssBlock) {
+        let css = `:root {\n`;
+        Object.keys(activeTokens).forEach(k => {
+          css += `  --${k}: ${activeTokens[k]};\n`;
+        });
+        css += `}\n`;
+        cssBlock.innerText = css;
+      }
+
+      // Tailwind v4 Theme
+      const twBlock = document.getElementById('tailwind-code-block');
+      if (twBlock) {
+        let tw = `@theme {\n`;
+        tw += `  --color-navy-deep: ${activeTokens['bg-navy-deep']};\n`;
+        tw += `  --color-graphite: ${activeTokens['bg-graphite']};\n`;
+        tw += `  --color-warm-white: ${activeTokens['bg-warm-white']};\n`;
+        tw += `  --color-card-light: ${activeTokens['bg-card-light']};\n`;
+        tw += `  --color-text-on-dark: ${activeTokens['text-on-dark']};\n`;
+        tw += `  --color-text-on-light: ${activeTokens['text-on-light']};\n`;
+        tw += `  --color-accent-bronze: ${activeTokens['accent-bronze']};\n`;
+        tw += `  --color-accent-gold: ${activeTokens['accent-gold-bright']};\n`;
+        tw += `}\n`;
+        twBlock.innerText = tw;
+      }
+
+      // JSON Tokens
+      const jsonBlock = document.getElementById('json-code-block');
+      if (jsonBlock) {
+        jsonBlock.innerText = JSON.stringify({
+          name: "CORE9 RESOLVE™ Business Design Tokens",
+          version: "1.1.0",
+          tokens: activeTokens
+        }, null, 2);
+      }
+    }
+
+    /* ==========================================================================
+       TAB CONTROLLER
+       ========================================================================== */
+    function switchPreviewTab(tabId) {
+      activeTab = tabId;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`tab-btn-${tabId}`).classList.add('active');
+
+      const views = ['site', 'sandbox', 'markdown', 'css', 'tailwind', 'json'];
+      views.forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.style.display = 'none';
+      });
+
+      const activeEl = document.getElementById(`view-${tabId}`);
+      if (activeEl) {
+        if (tabId === 'site') {
+          activeEl.style.display = 'flex';
+          injectTokensIntoIframe();
+        } else if (tabId === 'sandbox') {
+          activeEl.style.display = 'flex';
+        } else {
+          activeEl.style.display = 'flex';
+        }
+      }
+    }
+
+    /* ==========================================================================
+       URL SHARE & PRESET ENCODING
+       ========================================================================== */
+    function copyShareableUrl() {
+      const modified = getModifiedTokens();
+      const params = new URLSearchParams();
+      Object.keys(modified).forEach(k => {
+        params.set(k, modified[k].to);
+      });
+
+      const url = `${window.location.origin}${window.location.pathname}#tokens=${encodeURIComponent(params.toString())}`;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast('✓ Shareable session link copied to clipboard!');
+      });
+    }
+
+    function parseUrlHashTokens() {
+      if (!window.location.hash.startsWith('#tokens=')) return;
+      try {
+        const raw = decodeURIComponent(window.location.hash.replace('#tokens=', ''));
+        const params = new URLSearchParams(raw);
+        params.forEach((val, key) => {
+          if (BASELINE_DEFAULTS.hasOwnProperty(key)) {
+            activeTokens[key] = val;
+          }
+        });
+        showToast('✓ Loaded shared token configuration from URL');
+      } catch (e) {
+        console.error('Failed to parse URL tokens', e);
+      }
+    }
+
+    /* ==========================================================================
+       EXPORTS & DOWNLOADS
+       ========================================================================== */
+    function downloadMarkdownDiff() {
+      const mdContent = generateMarkdownString();
+      const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', 'CORE9_Design_Tokens_Changelog.md');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('✓ Downloaded CORE9_Design_Tokens_Changelog.md');
+    }
+
+    function copyMarkdown() {
+      navigator.clipboard.writeText(generateMarkdownString()).then(() => {
+        showToast('✓ Copied Markdown specification to clipboard!');
+      });
+    }
+
+    function copyCss() {
+      const text = document.getElementById('css-code-block')?.innerText || '';
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ Copied CSS variables to clipboard!');
+      });
+    }
+
+    function copyTailwind() {
+      const text = document.getElementById('tailwind-code-block')?.innerText || '';
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ Copied Tailwind @theme configuration to clipboard!');
+      });
+    }
+
+    function copyJson() {
+      const text = document.getElementById('json-code-block')?.innerText || '';
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ Copied JSON design tokens to clipboard!');
+      });
+    }
+
+    function copyCurrentTabContent() {
+      if (activeTab === 'markdown') copyMarkdown();
+      else if (activeTab === 'css') copyCss();
+      else if (activeTab === 'tailwind') copyTailwind();
+      else if (activeTab === 'json') copyJson();
+      else copyShareableUrl();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+  </script>
+</body>
+</html>
