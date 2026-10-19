@@ -192,6 +192,35 @@
       box-shadow: 0 0 12px rgba(197, 155, 95, 0.35);
     }
 
+    /* Popout & Fullscreen Window Modes */
+    body.controls-only-window .studio-header {
+      padding: 0 1rem;
+    }
+
+    body.controls-only-window .studio-container {
+      grid-template-columns: 1fr !important;
+      height: calc(100vh - 64px) !important;
+    }
+
+    body.controls-only-window .preview-panel {
+      display: none !important;
+    }
+
+    body.controls-only-window .controls-panel {
+      border-right: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* Main Window When Left Toolbar is Popped Out or Collapsed */
+    body.mode-fullscreen-preview .controls-panel {
+      display: none !important;
+    }
+
+    body.mode-fullscreen-preview .studio-container {
+      grid-template-columns: 1fr !important;
+    }
+
     /* Studio Main Layout */
     .studio-container {
       display: grid;
@@ -717,6 +746,20 @@
     </div>
 
     <div class="studio-toolbar-actions">
+      <!-- Re-dock / Uncollapse buttons in header -->
+      <button id="btn-uncollapse-header" class="btn-action" onclick="toggleSidebarCollapse()" style="display: none;" title="Show sidebar toolbar">
+        ☰ Show Toolbar
+      </button>
+
+      <button id="btn-redock-header" class="btn-action btn-action-primary" onclick="closePopoutControlsWindow()" style="display: none;" title="Re-dock floating controls palette back into this window">
+        ⤓ Re-dock Toolbar
+      </button>
+
+      <!-- Button shown only in the popped-out controls popup window -->
+      <button id="btn-popup-redock" class="btn-action btn-action-primary" onclick="requestRedockFromPopup()" style="display: none;" title="Close this window and re-dock into the main window">
+        ⤓ Re-dock to Main
+      </button>
+
       <!-- Active Changes Counter Badge / Diff Filter Shortcut -->
       <button id="diff-counter-btn" class="diff-counter-pill" onclick="toggleDiffFilter()">
         <span id="diff-status-dot">●</span>
@@ -743,17 +786,28 @@
     <!-- LEFT SIDEBAR: Design Token Workbench -->
     <aside class="controls-panel">
       
-      <!-- Top Controls Filter Bar -->
+      <!-- Top Controls Filter Bar & Popout Action -->
       <div class="controls-top-bar">
-        <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--studio-text-muted); text-transform: uppercase;">
-          Filter View:
-        </span>
-        <div class="view-filter-switch">
-          <button id="filter-all-btn" class="view-filter-btn active" onclick="setViewFilter('all')">
-            Show All
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--studio-text-muted); text-transform: uppercase;">
+            Filter:
+          </span>
+          <div class="view-filter-switch">
+            <button id="filter-all-btn" class="view-filter-btn active" onclick="setViewFilter('all')">
+              All
+            </button>
+            <button id="filter-diff-btn" class="view-filter-btn" onclick="setViewFilter('diff')">
+              Diff
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.35rem;">
+          <button id="btn-popout-controls" class="btn-action" onclick="openPopoutControlsWindow()" title="Pop out this toolbar into a separate floating window" style="padding: 0.25rem 0.6rem; font-size: 0.7rem; color: var(--studio-bronze-light); border-color: rgba(197, 155, 95, 0.4);">
+            ↗ Pop Out
           </button>
-          <button id="filter-diff-btn" class="view-filter-btn" onclick="setViewFilter('diff')">
-            Modified Only (Diff)
+          <button id="btn-collapse-sidebar" class="btn-action" onclick="toggleSidebarCollapse()" title="Collapse toolbar into full preview mode" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">
+            ◀ Hide
           </button>
         </div>
       </div>
@@ -1244,13 +1298,64 @@
     let activeTokens = { ...BASELINE_DEFAULTS };
     let activeFilter = 'all'; // 'all' or 'diff'
     let activeTab = 'site';
+    let popoutControlsWindowRef = null;
+
+    // Detect if this is the popped-out floating controls window
+    const urlParams = new URLSearchParams(window.location.search);
+    const isControlsOnlyWindow = urlParams.get('window') === 'controls';
+    const syncChannel = new BroadcastChannel('core9_studio_channel');
+
+    /* ==========================================================================
+       CROSS-WINDOW SYNCHRONIZATION
+       ========================================================================== */
+    syncChannel.onmessage = (event) => {
+      if (!event.data) return;
+      if (event.data.type === 'TOKENS_UPDATE' && event.data.tokens) {
+        activeTokens = { ...event.data.tokens };
+        syncInputsFromState();
+        applyTokenChanges(false);
+      } else if (event.data.type === 'REDOCK') {
+        closePopoutControlsWindow();
+      }
+    };
+
+    window.addEventListener('message', (event) => {
+      if (!event.data) return;
+      if (event.data.type === 'TOKENS_UPDATE' && event.data.tokens) {
+        activeTokens = { ...event.data.tokens };
+        syncInputsFromState();
+        applyTokenChanges(false);
+      } else if (event.data.type === 'REDOCK') {
+        closePopoutControlsWindow();
+      }
+    });
 
     /* ==========================================================================
        INITIALIZATION & URL HASH PARSER
        ========================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. Check for URL encoded preset/tokens
+      // 0. Handle popped-out controls mode
+      if (isControlsOnlyWindow) {
+        document.body.classList.add('controls-only-window');
+        document.title = 'CORE9 RESOLVE™ — Controls Palette';
+        const popupRedockBtn = document.getElementById('btn-popup-redock');
+        if (popupRedockBtn) popupRedockBtn.style.display = 'inline-flex';
+        const popoutBtn = document.getElementById('btn-popout-controls');
+        if (popoutBtn) popoutBtn.style.display = 'none';
+        const collapseBtn = document.getElementById('btn-collapse-sidebar');
+        if (collapseBtn) collapseBtn.style.display = 'none';
+      }
+
+      // 1. Check for URL encoded preset/tokens or localStorage
       parseUrlHashTokens();
+
+      const savedTokens = localStorage.getItem('core9_studio_tokens');
+      if (savedTokens && !window.location.hash.startsWith('#tokens=')) {
+        try {
+          const parsed = JSON.parse(savedTokens);
+          activeTokens = { ...activeTokens, ...parsed };
+        } catch (e) {}
+      }
 
       // 2. Initialize inputs with active tokens
       syncInputsFromState();
@@ -1269,6 +1374,73 @@
       // 5. Update diff counters
       updateDiffCounter();
     });
+
+    /* ==========================================================================
+       POPOUT & COLLAPSE CONTROLLERS
+       ========================================================================== */
+    function openPopoutControlsWindow() {
+      if (isControlsOnlyWindow) return;
+
+      const width = 480;
+      const height = 900;
+      const left = window.screen.width - width - 40;
+      const top = 60;
+
+      const url = `${window.location.pathname}?window=controls`;
+      popoutControlsWindowRef = window.open(
+        url,
+        'core9_controls_popup',
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no`
+      );
+
+      if (popoutControlsWindowRef) {
+        document.body.classList.add('mode-fullscreen-preview');
+        const redockBtn = document.getElementById('btn-redock-header');
+        if (redockBtn) redockBtn.style.display = 'inline-flex';
+
+        setTimeout(() => {
+          try {
+            popoutControlsWindowRef.postMessage({ type: 'TOKENS_UPDATE', tokens: activeTokens }, '*');
+          } catch (e) {}
+        }, 400);
+
+        showToast('✓ Controls palette popped out into floating window!');
+      } else {
+        alert('Pop-up was blocked. Please allow pop-ups for this site, or use the "Hide" button to view full screen.');
+      }
+    }
+
+    function closePopoutControlsWindow() {
+      if (popoutControlsWindowRef && !popoutControlsWindowRef.closed) {
+        popoutControlsWindowRef.close();
+      }
+      popoutControlsWindowRef = null;
+      document.body.classList.remove('mode-fullscreen-preview');
+      const redockBtn = document.getElementById('btn-redock-header');
+      if (redockBtn) redockBtn.style.display = 'none';
+      const uncollapseBtn = document.getElementById('btn-uncollapse-header');
+      if (uncollapseBtn) uncollapseBtn.style.display = 'none';
+      showToast('✓ Re-docked toolbar into main window');
+    }
+
+    function requestRedockFromPopup() {
+      try {
+        syncChannel.postMessage({ type: 'REDOCK' });
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage({ type: 'REDOCK' }, '*');
+        }
+      } catch (e) {}
+      window.close();
+    }
+
+    function toggleSidebarCollapse() {
+      const isCollapsed = document.body.classList.toggle('mode-fullscreen-preview');
+      const uncollapseBtn = document.getElementById('btn-uncollapse-header');
+      if (uncollapseBtn) {
+        uncollapseBtn.style.display = isCollapsed ? 'inline-flex' : 'none';
+      }
+      showToast(isCollapsed ? 'Full Preview Mode (Toolbar Hidden)' : 'Toolbar Restored');
+    }
 
     /* ==========================================================================
        STATE & TOKEN MANAGERS
@@ -1302,7 +1474,7 @@
       applyTokenChanges();
     }
 
-    function applyTokenChanges() {
+    function applyTokenChanges(shouldBroadcast = true) {
       // 1. Update CSS variables on Studio root
       const root = document.documentElement;
       Object.keys(activeTokens).forEach(key => {
@@ -1317,6 +1489,18 @@
 
       // 4. Re-render code tabs
       renderAllCodeOutputs();
+
+      // 5. Broadcast to popped-out or parent window in real time
+      if (shouldBroadcast) {
+        syncChannel.postMessage({ type: 'TOKENS_UPDATE', tokens: activeTokens });
+        localStorage.setItem('core9_studio_tokens', JSON.stringify(activeTokens));
+        if (window.opener && !window.opener.closed) {
+          window.opener.postMessage({ type: 'TOKENS_UPDATE', tokens: activeTokens }, '*');
+        }
+        if (popoutControlsWindowRef && !popoutControlsWindowRef.closed) {
+          popoutControlsWindowRef.postMessage({ type: 'TOKENS_UPDATE', tokens: activeTokens }, '*');
+        }
+      }
     }
 
     /* ==========================================================================
