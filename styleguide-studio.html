@@ -1062,11 +1062,22 @@
       <div class="preset-selector-group">
         <span>Preset:</span>
         <select id="preset-select" class="preset-dropdown" onchange="applyPreset(this.value)">
-          <option value="baseline" selected>🏛️ CORE9 Baseline Specification (Default)</option>
-          <option value="obsidian-deep">🌑 Deep Obsidian Navy Contrast</option>
-          <option value="warm-bronze">✨ Rich Luminous Bronze / Champagne</option>
-          <option value="architectural-crisp">📐 Stark Architectural Monolith</option>
+          <option value="baseline" selected>🏛️ Baseline Specification (Default Production)</option>
+          <option value="preset-a">🏁 Preset A — "Framed Black &amp; Crisp White" (Svetlana's Favorite)</option>
+          <option value="preset-b">⚓ Preset B — "Executive Navy &amp; Alabaster" (Zero Black)</option>
+          <option value="preset-c">📐 Preset C — "Light Editorial Architectural" (High-Daylight)</option>
+          <option value="preset-d">🌌 Preset D — "High-Contrast Dark Sky" (Pure Contrast)</option>
         </select>
+      </div>
+
+      <!-- Preset Details Banner -->
+      <div id="preset-info-card" style="margin: 0 1.25rem 0.85rem; padding: 0.65rem 0.85rem; background: rgba(7, 11, 20, 0.7); border: 1px solid rgba(197, 155, 95, 0.25); border-radius: 4px; font-size: 0.68rem; color: #94A3B8; line-height: 1.4;">
+        <div style="font-weight: 700; color: var(--studio-bronze-light); margin-bottom: 2px;" id="preset-info-title">
+          Active Direction: 🏛️ Baseline Specification
+        </div>
+        <div id="preset-info-desc">
+          Official baseline: Obsidian Navy (#070B14) hero, Architectural Graphite (#111726), Warm White (#F7F5F0) reading sections, and Restrained Bronze (#C59B5F).
+        </div>
       </div>
 
       <!-- Accordion Form Controls -->
@@ -2177,6 +2188,23 @@
           .border-\\[\\#C59B5F\\], [class*="border-[#C59B5F]"] { border-color: var(--accent-bronze) !important; }
           .text-\\[\\#E5C185\\], [class*="text-[#E5C185]"] { color: var(--accent-gold-bright) !important; }
           .border-\\[\\#E5C185\\], [class*="border-[#E5C185]"] { border-color: var(--accent-gold-bright) !important; }
+
+          /* Section 03 Dark Vault Preservation for High-Daylight (Preset C) */
+          .bg-\\[\\#111726\\] h2, 
+          .bg-\\[\\#111726\\] [class*="text-[#F9FAFB]"] {
+            color: #FFFFFF !important;
+          }
+          .bg-\\[\\#111726\\] p, 
+          .bg-\\[\\#111726\\] [class*="text-[#9CA3AF]"],
+          .bg-\\[\\#111726\\] .text-gray-400 {
+            color: #9CA3AF !important;
+          }
+
+          /* Preset D Boosted Scale Support (+15%) */
+          ${activeTokens['text-muted-dark'] === '#FFFFFF' && activeTokens['body-line-height'] === '1.75' ? `
+            h1, .text-4xl, .text-5xl, .text-6xl, .text-7xl { font-size: 1.15em !important; }
+            p, .text-base, .text-lg, .text-xl { font-size: 1.08em !important; }
+          ` : ''}
         `;
       } catch (e) {
         // Cross-origin fallback (when testing under restrictive origins)
@@ -2217,11 +2245,43 @@
     /* ==========================================================================
        PRESETS & RESET ENGINE
        ========================================================================== */
+    const PRESET_DESCRIPTIONS = {
+      'baseline': {
+        title: '🏛️ Baseline Specification (Production Default)',
+        desc: 'Official baseline: Obsidian Navy (#070B14) hero, Architectural Graphite (#111726), Warm White (#F7F5F0) reading sections, and Restrained Bronze (#C59B5F).'
+      },
+      'preset-a': {
+        title: "🏁 Preset A — \"Framed Black & Crisp White\" (Svetlana's Favorite)",
+        desc: 'Pure Black (#070709) hero framed with bright Gold geometric lines (#D4AF37) and 100% pure white text (#FFFFFF), alternating strictly with pure White (#FFFFFF) sections and Charcoal ink (#111827). Zero navy-on-black.'
+      },
+      'preset-b': {
+        title: '⚓ Preset B — "Executive Navy & Alabaster" (Zero Black)',
+        desc: 'Deep Royal Navy (#0F1E36) alternating with Warm White (#F8F9FA), pure white text on navy, deep navy text on white, and bronze structural lines. Zero black.'
+      },
+      'preset-c': {
+        title: '📐 Preset C — "Light Editorial Architectural" (High-Daylight)',
+        desc: '80% Warm White / Stone canvas (#F7F5F0) with dark Charcoal typography (#0F172A), crisp 1px architectural grids, and a single high-contrast Black/Gold Vault section for the 9-Point Diagram.'
+      },
+      'preset-d': {
+        title: '🌌 Preset D — "High-Contrast Dark Sky" (Pure Contrast)',
+        desc: 'Deep Obsidian canvas (#040711) with boosted font sizes (+15% scale), pure #FFFFFF text (zero muted gray), and bright gold vector diagrams.'
+      }
+    };
+
+    function updatePresetInfoBanner(presetKey) {
+      const info = PRESET_DESCRIPTIONS[presetKey] || PRESET_DESCRIPTIONS['baseline'];
+      const titleEl = document.getElementById('preset-info-title');
+      const descEl = document.getElementById('preset-info-desc');
+      if (titleEl) titleEl.innerText = info.title;
+      if (descEl) descEl.innerText = info.desc;
+    }
+
     function resetToBrandDefaults() {
       activeTokens = { ...BASELINE_DEFAULTS };
       syncInputsFromState();
       applyTokenChanges();
       document.getElementById('preset-select').value = 'baseline';
+      updatePresetInfoBanner('baseline');
       showToast('✓ Restored CORE9 Brand Baseline Specification');
     }
 
@@ -2231,25 +2291,86 @@
         return;
       }
 
-      if (presetKey === 'obsidian-deep') {
-        activeTokens['bg-navy-deep'] = '#03050A';
-        activeTokens['bg-graphite'] = '#0A0F1A';
+      // Reset to baseline defaults before applying deltas
+      activeTokens = { ...BASELINE_DEFAULTS };
+
+      if (presetKey === 'preset-a') {
+        // Preset A — "Framed Black & Crisp White" (Svetlana's Favorite Direction)
+        activeTokens['bg-navy-deep'] = '#070709';
+        activeTokens['bg-graphite'] = '#111217';
         activeTokens['accent-bronze'] = '#D4AF37';
         activeTokens['accent-gold-bright'] = '#F3E5AB';
-      } else if (presetKey === 'warm-bronze') {
-        activeTokens['bg-navy-deep'] = '#090D18';
-        activeTokens['accent-bronze'] = '#D99B4B';
-        activeTokens['accent-gold-bright'] = '#FAD089';
-      } else if (presetKey === 'architectural-crisp') {
-        activeTokens['font-headline'] = "'Cinzel', serif";
-        activeTokens['headline-tracking'] = '0.02em';
         activeTokens['bg-warm-white'] = '#FFFFFF';
-        activeTokens['border-radius-card'] = '2px';
+        activeTokens['bg-card-light'] = '#F9FAFB';
+        activeTokens['text-on-dark'] = '#FFFFFF';
+        activeTokens['text-muted-dark'] = '#D1D5DB';
+        activeTokens['text-on-light'] = '#111827';
+        activeTokens['text-muted-light'] = '#374151';
+        activeTokens['headline-tracking'] = '-0.025em';
+        activeTokens['body-line-height'] = '1.65';
+        activeTokens['border-radius-card'] = '6px';
+        activeTokens['vector-glow-opacity'] = '0.9';
+      } else if (presetKey === 'preset-b') {
+        // Preset B — "Executive Navy & Alabaster" (Zero Black)
+        activeTokens['bg-navy-deep'] = '#0F1E36';
+        activeTokens['bg-graphite'] = '#182C4D';
+        activeTokens['accent-bronze'] = '#C59B5F';
+        activeTokens['accent-gold-bright'] = '#E5C185';
+        activeTokens['bg-warm-white'] = '#F8F9FA';
+        activeTokens['bg-card-light'] = '#FFFFFF';
+        activeTokens['text-on-dark'] = '#FFFFFF';
+        activeTokens['text-muted-dark'] = '#B0C0D6';
+        activeTokens['text-on-light'] = '#0F1E36';
+        activeTokens['text-muted-light'] = '#415777';
+        activeTokens['headline-tracking'] = '-0.025em';
+        activeTokens['body-line-height'] = '1.65';
+        activeTokens['border-radius-card'] = '8px';
+        activeTokens['vector-glow-opacity'] = '0.85';
+      } else if (presetKey === 'preset-c') {
+        // Preset C — "Light Editorial Architectural" (High-Daylight)
+        activeTokens['bg-navy-deep'] = '#F7F5F0';
+        activeTokens['bg-graphite'] = '#0A0D14';
+        activeTokens['accent-bronze'] = '#C59B5F';
+        activeTokens['accent-gold-bright'] = '#D4AF37';
+        activeTokens['bg-warm-white'] = '#EDE9DE';
+        activeTokens['bg-card-light'] = '#FFFFFF';
+        activeTokens['text-on-dark'] = '#0F172A';
+        activeTokens['text-muted-dark'] = '#475569';
+        activeTokens['text-on-light'] = '#0F172A';
+        activeTokens['text-muted-light'] = '#475569';
+        activeTokens['headline-tracking'] = '-0.02em';
+        activeTokens['body-line-height'] = '1.7';
+        activeTokens['border-radius-card'] = '4px';
+        activeTokens['vector-glow-opacity'] = '0.6';
+      } else if (presetKey === 'preset-d') {
+        // Preset D — "High-Contrast Dark Sky" (Pure Contrast)
+        activeTokens['bg-navy-deep'] = '#040711';
+        activeTokens['bg-graphite'] = '#0A0F1D';
+        activeTokens['accent-bronze'] = '#E5C185';
+        activeTokens['accent-gold-bright'] = '#FFF2B2';
+        activeTokens['bg-warm-white'] = '#F3F4F6';
+        activeTokens['bg-card-light'] = '#FFFFFF';
+        activeTokens['text-on-dark'] = '#FFFFFF';
+        activeTokens['text-muted-dark'] = '#FFFFFF'; // Pure #FFFFFF text (zero muted gray)
+        activeTokens['text-on-light'] = '#000000';
+        activeTokens['text-muted-light'] = '#1F2937';
+        activeTokens['headline-tracking'] = '-0.015em';
+        activeTokens['body-line-height'] = '1.75';
+        activeTokens['border-radius-card'] = '8px';
+        activeTokens['vector-glow-opacity'] = '1.0';
       }
 
       syncInputsFromState();
       applyTokenChanges();
-      showToast(`✓ Applied Preset: ${presetKey}`);
+      updatePresetInfoBanner(presetKey);
+
+      const presetNames = {
+        'preset-a': 'Preset A — Framed Black & Crisp White (Svetlana)',
+        'preset-b': 'Preset B — Executive Navy & Alabaster (Zero Black)',
+        'preset-c': 'Preset C — Light Editorial Architectural (High-Daylight)',
+        'preset-d': 'Preset D — High-Contrast Dark Sky (Pure Contrast)'
+      };
+      showToast(`✓ Applied: ${presetNames[presetKey] || presetKey}`);
     }
 
     function syncInputsFromState() {
