@@ -87,6 +87,17 @@ export const ExecutiveFooter: React.FC<ExecutiveFooterProps> = ({
                   Insights & Strategic Broadcasts
                 </button>
               </li>
+              <li className="pt-2 border-t border-white/5">
+                <a
+                  href="./styleguide-studio.html"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-[#E5C185] transition-colors cursor-pointer text-left text-xs font-mono inline-flex items-center gap-1.5 text-[#C59B5F]"
+                >
+                  <span>Styleguide Studio</span>
+                  <span className="text-[10px]">↗</span>
+                </a>
+              </li>
             </ul>
           </div>
 
